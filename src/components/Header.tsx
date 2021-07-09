@@ -39,7 +39,7 @@ function Header() {
               Bookshelf App
             </Link>
           </Typography>
-          <Button color="inherit">ログイン</Button>
+          <Link to="/login" color="inherit">ログイン</Link>
         </Toolbar>
       </AppBar>
     </div>

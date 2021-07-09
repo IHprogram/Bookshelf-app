@@ -7,12 +7,16 @@ import {
 } from 'react-router-dom';
 import Header from './Header';
 import Home from './Home';
+import Login from './Login';
 
 function App() {
   return (
     <Router>
       <Header />
       <Switch>
+        <Route exact path='/login'>
+          <Login />
+        </Route>
         <Route exact path='/'>
           <Home />
         </Route>
