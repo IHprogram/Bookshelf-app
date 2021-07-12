@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -8,6 +8,8 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import { useHistory } from 'react-router-dom';
+import { useDispatch } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -21,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: '100%',
     marginTop: theme.spacing(3),
   },
   submit: {
@@ -31,6 +33,32 @@ const useStyles = makeStyles((theme) => ({
 
 const SignUp = () => {
   const classes = useStyles();
+  const history = useHistory();
+  const dispatch = useDispatch();
+
+  const [name, setName] = useState<string>(''),
+    [email, setEmail] = useState<string>(''),
+    [password, setPassword] = useState<string>('');
+
+  const inputName = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    console.log(e.target.value);
+    setName(e.target.value)
+  };
+
+  const inputEmail = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    console.log(e.target.value);
+    setEmail(e.target.value)
+  };
+
+  const inputPassword = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    const { target } = e;
+    console.log(e.target.value);
+    setPassword(e.target.value)
+  };
+
+  const register = () => {
+    console.log(name, email, password);
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -53,6 +81,7 @@ const SignUp = () => {
                 label="名前"
                 name="name"
                 autoComplete="name"
+                onChange={inputName}
               />
             </Grid>
             <Grid item xs={12}>
@@ -64,6 +93,7 @@ const SignUp = () => {
                 label="メールアドレス"
                 name="email"
                 autoComplete="email"
+                onChange={inputEmail}
               />
             </Grid>
             <Grid item xs={12}>
@@ -76,6 +106,7 @@ const SignUp = () => {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                onChange={inputPassword}
               />
             </Grid>
           </Grid>
@@ -85,6 +116,7 @@ const SignUp = () => {
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={register}
           >
             登録する
           </Button>
