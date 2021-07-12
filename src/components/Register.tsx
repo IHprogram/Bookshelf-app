@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from "react-redux";
+import { userRegister } from '../actions/index'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -31,6 +32,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+interface newUserType {
+  name: string;
+  email: string;
+  password: string;
+}
+
 const SignUp = () => {
   const classes = useStyles();
   const history = useHistory();
@@ -41,23 +48,25 @@ const SignUp = () => {
     [password, setPassword] = useState<string>('');
 
   const inputName = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    console.log(e.target.value);
     setName(e.target.value)
   };
 
   const inputEmail = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    console.log(e.target.value);
     setEmail(e.target.value)
   };
 
   const inputPassword = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    const { target } = e;
-    console.log(e.target.value);
     setPassword(e.target.value)
   };
 
   const register = () => {
-    console.log(name, email, password);
+    const newUser: newUserType = {
+      name,
+      email,
+      password
+    }
+    dispatch(userRegister(newUser))
+    history.push('/');
   }
 
   return (
