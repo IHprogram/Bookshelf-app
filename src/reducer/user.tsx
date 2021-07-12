@@ -13,7 +13,6 @@ export default (state = initialState, action) => {
       state.name = action.name;
       state.email = action.email;
       state.login_user = action.login_user;
-      console.log(state);
       return state;
     case LOGOUT_USER:
       state.name = '';

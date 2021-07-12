@@ -30,7 +30,6 @@ export const logoutUser = () => {
 
 
 export const userRegister = (user: newUserType) => (dispatch) => {
-  console.log(user);
 
   firebase.auth().createUserWithEmailAndPassword(user.email, user.password)
     .then(async result => {
@@ -44,7 +43,6 @@ export const userRegister = (user: newUserType) => (dispatch) => {
           alert('ユーザー登録に失敗しました。お手数ですがもう一度やり直してください')
         })
     }).catch((error) => {
-      console.log(error)
       alert('入力したメールアドレスはすでに使用されています。')
     })
 }

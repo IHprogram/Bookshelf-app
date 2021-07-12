@@ -55,7 +55,6 @@ function Header({ loginUser }: Props) {
 
   const LoginOrLogout = (props) => {
     const clickLogout = () => {
-      console.log(props.loginUser)
       dispatch(signOut());
     };
 

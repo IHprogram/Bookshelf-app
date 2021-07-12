@@ -22,8 +22,6 @@ function App() {
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
-      console.log(loginUserState);
-      console.log(user)
       if (user) {
         const name: string | null = user.displayName;
         const email: string | null = user.email;
@@ -33,7 +31,6 @@ function App() {
   }, []);
 
   useEffect(() => {
-    console.log(loginUserState);
     setLoginUser(loginUserState);
   }, [loginUserState]);
 
