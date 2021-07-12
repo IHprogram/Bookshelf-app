@@ -6,6 +6,20 @@ interface newUserType {
   password: string;
 }
 
+export const SET_USER_INFO = 'SET_USER_INFO';
+
+export const setUserInfo = (name, email) => {
+  return (
+    {
+      type: SET_USER_INFO,
+      name: name,
+      email: email,
+      login_user: true
+    }
+  )
+}
+
+
 export const userRegister = (user: newUserType) => (dispatch) => {
   console.log(user);
 
@@ -16,11 +30,7 @@ export const userRegister = (user: newUserType) => (dispatch) => {
         displayName: user.name
       })
         .then(result2 => {
-          console.log(result);
-          const user = result.user;
-          if (user) {
-            console.log(user)
-          }
+          dispatch(setUserInfo(user.name, user.email))
         }).catch((error) => {
           alert('ユーザー登録に失敗しました。お手数ですがもう一度やり直してください')
         })
