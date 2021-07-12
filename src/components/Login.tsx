@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -11,6 +11,10 @@ import Grid from '@material-ui/core/Grid';
 import {
   Link
 } from 'react-router-dom';
+import { useDispatch } from "react-redux";
+import { useHistory } from 'react-router-dom';
+import { signIn } from '../actions/index';
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -33,7 +37,25 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const SignIn = () => {
-  const classes = useStyles()
+  const classes = useStyles();
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const [email, setEmail] = useState<string>(''),
+    [password, setPassword] = useState<string>('');
+
+  const inputEmail = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    setEmail(e.target.value)
+  };
+
+  const inputPassword = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    setPassword(e.target.value)
+  };
+
+  const login = (): void => {
+    dispatch(signIn(email, password));
+    history.push('/');
+  }
 
   return (
     <Container component="main" maxWidth="xs" >
@@ -56,6 +78,7 @@ const SignIn = () => {
             name="email"
             autoComplete="email"
             autoFocus
+            onChange={inputEmail}
           />
 
           <TextField
@@ -68,6 +91,7 @@ const SignIn = () => {
             type="password"
             id="password"
             autoComplete="current-password"
+            onChange={inputPassword}
           />
 
           <Button
@@ -76,6 +100,7 @@ const SignIn = () => {
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={login}
           >
             ログインする
           </Button>

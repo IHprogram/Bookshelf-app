@@ -47,6 +47,17 @@ export const userRegister = (user: newUserType) => (dispatch) => {
     })
 }
 
+export const signIn = (email, password) => (dispatch) => {
+  firebase.auth().signInWithEmailAndPassword(email, password)
+    .then(result => {
+      const userName: string | null = result.user!.displayName;
+      const userEmail: string | null = result.user!.email;
+      dispatch(setUserInfo(userName, userEmail));
+    }).catch((error) => {
+      alert('メールアドレスかパスワードが間違えています')
+    })
+}
+
 export const signOut = () => (dispatch) => {
   firebase.auth().signOut()
     .then(result => {
