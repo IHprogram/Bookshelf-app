@@ -7,6 +7,7 @@ interface newUserType {
 }
 
 export const SET_USER_INFO = 'SET_USER_INFO';
+export const LOGOUT_USER = 'LOGOUT_USER';
 
 export const setUserInfo = (name, email) => {
   return (
@@ -15,6 +16,14 @@ export const setUserInfo = (name, email) => {
       name: name,
       email: email,
       login_user: true
+    }
+  )
+}
+
+export const logoutUser = () => {
+  return (
+    {
+      type: LOGOUT_USER
     }
   )
 }
@@ -37,5 +46,14 @@ export const userRegister = (user: newUserType) => (dispatch) => {
     }).catch((error) => {
       console.log(error)
       alert('入力したメールアドレスはすでに使用されています。')
+    })
+}
+
+export const signOut = () => (dispatch) => {
+  firebase.auth().signOut()
+    .then(result => {
+      dispatch(logoutUser());
+    }).catch((error) => {
+      alert('ログアウトに失敗しました。お手数ですがもう1度お試しください')
     })
 }
