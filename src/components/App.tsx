@@ -40,7 +40,7 @@ function App() {
       <Header loginUser={loginUser} />
       <Switch>
         <Route exact path='/detail/:id'>
-          <Detail />
+          <Detail loginUser={loginUser} />
         </Route>
         <Route exact path='/login'>
           <Login />

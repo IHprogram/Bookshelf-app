@@ -15,8 +15,12 @@ interface LocationState {
   searchdata: LocationContent
 }
 
+interface Props {
+  loginUser: boolean
+}
 
-function Detail() {
+
+function Detail({ loginUser }: Props) {
   const location = useLocation();
   const state = location.state as LocationState;
   const title: string = state.searchdata.title;
@@ -34,10 +38,12 @@ function Detail() {
         <li>著者：{author}</li>
         <li>商品価格：{price}円</li>
         <li>商品説明：{caption}</li>
-        <li><a href={itemUrl} target='_blank' >商品URL</a></li>
-        <li>
-          <Button color="primary" >登録</Button>
-        </li>
+        <li><a href={itemUrl} target='_blank'>この本のURLはこちら</a></li>
+        {loginUser === true &&
+          <li>
+            <Button color="primary">登録</Button>
+          </li>
+        }
       </ul>
     </div>
   )
