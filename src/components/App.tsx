@@ -13,6 +13,7 @@ import Register from './Register';
 import firebase from '../firebase/firebase';
 import { setUserInfo } from '../actions/index';
 import { UserInfo } from '../Types';
+import Detail from '../components/Detail';
 
 function App() {
   const dispatch = useDispatch();
@@ -38,6 +39,9 @@ function App() {
     <Router>
       <Header loginUser={loginUser} />
       <Switch>
+        <Route exact path='/detail/:id'>
+          <Detail />
+        </Route>
         <Route exact path='/login'>
           <Login />
         </Route>

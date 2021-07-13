@@ -25,19 +25,6 @@ function Home() {
 
   const SearchResultState = useSelector((state: { Search: BookInfoType[] }) => state.Search);
 
-  // useEffect(() => {
-  //   axios.get("https://app.rakuten.co.jp/services/api/BooksBook/Search/20170404?", {
-  //     params: {
-  //       applicationId: "1019108687944298363", //楽天でログインし、自分のアプリケーションIDを取得
-  //       title: 'JavaScript', //後で変数にし、検索フォームのキーワードで検索できるようにする(現在はダミー)
-  //       author: '狩野祐東',
-  //     },
-  //   }).then(res => {
-  //     console.log(res)
-  //     setSearchData(res.data.Items);
-  //   });
-  // }, []);
-
   useEffect(() => {
     // console.log(SearchResultState)
     setSearchData(SearchResultState);
