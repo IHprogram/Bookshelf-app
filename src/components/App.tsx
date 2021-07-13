@@ -10,6 +10,7 @@ import Header from './Header';
 import Home from './Home';
 import Login from './Login';
 import Register from './Register';
+import Mypage from './Mypage';
 import firebase from '../firebase/firebase';
 import { setUserInfo } from '../actions/index';
 import { UserInfo } from '../Types';
@@ -50,6 +51,9 @@ function App() {
         </Route>
         <Route exact path='/register'>
           <Register />
+        </Route>
+        <Route exact path='/mypage'>
+          <Mypage />
         </Route>
         <Route exact path='/'>
           <button onClick={() => console.log(loginUserState)}>確認</button>

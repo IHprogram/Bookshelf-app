@@ -1,5 +1,14 @@
 import Book from "../models/books.js";
 
+export const getBooks = async (req, res) => {
+  try {
+    const book = await Book.find();
+    res.status(200).json(book);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export const createBook = async (req, res) => {
   const title = req.body.title;
   const author = req.body.author;
