@@ -11,13 +11,14 @@ interface newUserType {
 export const SET_USER_INFO = 'SET_USER_INFO';
 export const LOGOUT_USER = 'LOGOUT_USER';
 export const SET_SEARCH_RESULT = 'SET_SEARCH_RESULT';
+export const CREATE_BOOK = 'CREATE_BOOK';
 
 export const setUserInfo = (name, email) => {
   return (
     {
       type: SET_USER_INFO,
-      name: name,
-      email: email,
+      name,
+      email,
       login_user: true
     }
   )
@@ -38,6 +39,37 @@ export const setSearchResult = (result) => {
       result
     }
   )
+}
+
+export const createBook = (bookInfo, loginUserId, bookId) => {
+  return (
+    {
+      type: CREATE_BOOK,
+      bookInfo,
+      loginUserId,
+      bookId
+    }
+  )
+}
+
+export const registerBook = (newBook, loginUserId) => (dispatch) => {
+  console.log(newBook);
+  axios.post('http://localhost:3002/books', {
+    title: newBook.title,
+    author: newBook.author,
+    image: newBook.image,
+    caption: newBook.caption,
+    itemUrl: newBook.itemUrl,
+    loginUserId
+  })
+    .then(res => {
+      console.log('resです', res)
+      const bookId: string = res.data._id;
+      console.log(bookId);
+      dispatch(createBook(newBook, loginUserId, bookId));
+    }).catch(error => {
+      console.log(error);
+    })
 }
 
 export const fetchBooksInfo = (searchWord) => (dispatch) => {

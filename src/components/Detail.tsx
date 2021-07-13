@@ -1,6 +1,9 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
+import { useDispatch } from 'react-redux';
+import { registerBook } from '../actions/index';
+import { StringLiteralType } from 'typescript';
 
 interface LocationContent {
   title: string,
@@ -16,11 +19,12 @@ interface LocationState {
 }
 
 interface Props {
-  loginUser: boolean
+  loginUser: boolean,
+  loginUserId: string
 }
 
 
-function Detail({ loginUser }: Props) {
+function Detail({ loginUser, loginUserId }: Props) {
   const location = useLocation();
   const state = location.state as LocationState;
   const title: string = state.searchdata.title;
@@ -29,6 +33,19 @@ function Detail({ loginUser }: Props) {
   const price: number = state.searchdata.price;
   const caption: string | null = state.searchdata.caption;
   const itemUrl: string = state.searchdata.itemUrl;
+
+  const dispatch = useDispatch();
+
+  const register = () => {
+    const newBook = {
+      title,
+      author,
+      image,
+      caption,
+      itemUrl,
+    };
+    dispatch(registerBook(newBook, loginUserId))
+  }
 
   return (
     <div>
@@ -41,7 +58,7 @@ function Detail({ loginUser }: Props) {
         <li><a href={itemUrl} target='_blank'>この本のURLはこちら</a></li>
         {loginUser === true &&
           <li>
-            <Button color="primary">登録</Button>
+            <Button color="primary" onClick={register}>登録</Button>
           </li>
         }
       </ul>

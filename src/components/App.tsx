@@ -19,14 +19,17 @@ function App() {
   const dispatch = useDispatch();
   const loginUserState = useSelector((state: { User: UserInfo }) => state.User.login_user);
 
-  const [loginUser, setLoginUser] = useState<boolean>(false);
+  const [loginUser, setLoginUser] = useState<boolean>(false),
+    [loginUserId, setLoginUserId] = useState<string>('');
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
+        const userId: string | null = user.uid;
         const name: string | null = user.displayName;
         const email: string | null = user.email;
         dispatch(setUserInfo(name, email));
+        setLoginUserId(userId);
       }
     })
   }, []);
@@ -40,7 +43,7 @@ function App() {
       <Header loginUser={loginUser} />
       <Switch>
         <Route exact path='/detail/:id'>
-          <Detail loginUser={loginUser} />
+          <Detail loginUser={loginUser} loginUserId={loginUserId} />
         </Route>
         <Route exact path='/login'>
           <Login />
