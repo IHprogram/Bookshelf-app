@@ -1,4 +1,6 @@
 import firebase from '../firebase/firebase.js';
+import axios from 'axios';
+import rakutenid from '../rakutenid';
 
 interface newUserType {
   name: string;
@@ -8,6 +10,7 @@ interface newUserType {
 
 export const SET_USER_INFO = 'SET_USER_INFO';
 export const LOGOUT_USER = 'LOGOUT_USER';
+export const SET_SEARCH_RESULT = 'SET_SEARCH_RESULT';
 
 export const setUserInfo = (name, email) => {
   return (
@@ -26,6 +29,28 @@ export const logoutUser = () => {
       type: LOGOUT_USER
     }
   )
+}
+
+export const setSearchResult = (result) => {
+  return (
+    {
+      type: SET_SEARCH_RESULT,
+      result
+    }
+  )
+}
+
+export const fetchBooksInfo = (searchWord) => (dispatch) => {
+  console.log(searchWord);
+  axios.get("https://app.rakuten.co.jp/services/api/BooksBook/Search/20170404?", {
+    params: {
+      applicationId: rakutenid, //楽天でログインし、自分のアプリケーションIDを取得
+      title: searchWord, //後で変数にし、検索フォームのキーワードで検索できるようにする
+    },
+  }).then(res => {
+    console.log(res.data.Items);
+    dispatch(setSearchResult(res.data.Items))
+  });
 }
 
 

@@ -8,31 +8,48 @@ import Typography from '@material-ui/core/Typography';
 import {
   Link,
 } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
+interface BookInfoType {
+  title: string,
+  author: string,
+  image: string,
+  price: number,
+  caption: string,
+  itemUrl: string
+}
 
 function Home() {
-  const initial: [] = [];
+  const initial: BookInfoType[] = [];
   const [searchData, setSearchData] = useState(initial);
 
+  const SearchResultState = useSelector((state: { Search: BookInfoType[] }) => state.Search);
+
+  // useEffect(() => {
+  //   axios.get("https://app.rakuten.co.jp/services/api/BooksBook/Search/20170404?", {
+  //     params: {
+  //       applicationId: "1019108687944298363", //楽天でログインし、自分のアプリケーションIDを取得
+  //       title: 'JavaScript', //後で変数にし、検索フォームのキーワードで検索できるようにする(現在はダミー)
+  //       author: '狩野祐東',
+  //     },
+  //   }).then(res => {
+  //     console.log(res)
+  //     setSearchData(res.data.Items);
+  //   });
+  // }, []);
+
   useEffect(() => {
-    axios.get("https://app.rakuten.co.jp/services/api/BooksBook/Search/20170404?", {
-      params: {
-        applicationId: "1019108687944298363", //楽天でログインし、自分のアプリケーションIDを取得
-        title: '卓球', //後で変数にし、検索フォームのキーワードで検索できるようにする(現在はダミー)
-      },
-    }).then(res => {
-      console.log(res)
-      setSearchData(res.data.Items);
-    });
-  }, []);
+    // console.log(SearchResultState)
+    setSearchData(SearchResultState);
+  }, [SearchResultState]);
+
 
   return (
     <Grid container alignItems="center" justifyContent="center">
       <h1>書籍一覧</h1>
       <SearchForm />
 
-      <div>検索結果がここに表示される</div>
-      <button onClick={() => console.log(searchData)}>取得したデータ確認</button>
+      <button onClick={() => console.log(SearchResultState)}>取得したデータ確認</button>
 
       <ul>
         {searchData.length === 0 &&
@@ -44,7 +61,7 @@ function Home() {
               <Card>
                 <CardContent>
                   <Typography>
-                    <img src={element.Item.largeImageUrl} />
+                    <img src={element.image} />
                   </Typography>
                   <Typography>
                     <Link to={{
@@ -52,11 +69,11 @@ function Home() {
                       state: { searchdata: element }
                     }}
                     >
-                      {element.Item.title}
+                      {element.title}
                     </Link>
                   </Typography>
                   <Typography>
-                    {element.Item.author}
+                    {element.author}
                   </Typography>
                 </CardContent>
               </Card>
