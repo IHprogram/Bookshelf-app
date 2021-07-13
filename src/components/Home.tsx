@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import SearchForm from './SearchForm';
-import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -8,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import {
   Link,
 } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 interface BookInfoType {
   title: string,
@@ -26,7 +25,6 @@ function Home() {
   const SearchResultState = useSelector((state: { Search: BookInfoType[] }) => state.Search);
 
   useEffect(() => {
-    // console.log(SearchResultState)
     setSearchData(SearchResultState);
   }, [SearchResultState]);
 
@@ -35,8 +33,6 @@ function Home() {
     <Grid container alignItems="center" justifyContent="center">
       <h1>書籍一覧</h1>
       <SearchForm />
-
-      <button onClick={() => console.log(SearchResultState)}>取得したデータ確認</button>
 
       <ul>
         {searchData.length === 0 &&
