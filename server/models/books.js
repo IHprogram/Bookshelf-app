@@ -5,7 +5,8 @@ const booksSchema = new mongoose.Schema({
   author: String,
   image: String,
   caption: String,
-  itemUrl: String
+  itemUrl: String,
+  loginUserId: String
 })
 
 const Book = mongoose.model('Book', booksSchema);
