@@ -56,6 +56,7 @@ function Header({ loginUser }: Props) {
   const LoginOrLogout = (props) => {
     const clickLogout = () => {
       dispatch(signOut());
+      history.push('/')
     };
 
     if (props.loginUser === true) {
