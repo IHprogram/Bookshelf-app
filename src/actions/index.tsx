@@ -23,6 +23,7 @@ export const LOGOUT_USER = 'LOGOUT_USER';
 export const SET_SEARCH_RESULT = 'SET_SEARCH_RESULT';
 export const SET_MY_BOOKS = 'SET_MY_BOOKS';
 export const CREATE_BOOK = 'CREATE_BOOK';
+export const DELETE_ONE_BOOK = 'DELETE_ONE_BOOK';
 
 export const setUserInfo = (name, email) => {
   return (
@@ -72,6 +73,15 @@ export const createBook = (bookInfo, loginUserId, bookId) => {
   )
 }
 
+export const deleteOneBook = (id) => {
+  return (
+    {
+      type: DELETE_ONE_BOOK,
+      id,
+    }
+  )
+}
+
 export const getMyBooks = (loginUserId) => (dispatch) => {
   console.log(loginUserId);
   axios.get('http://localhost:3002/books')
@@ -100,6 +110,14 @@ export const registerBook = (newBook, loginUserId) => (dispatch) => {
       dispatch(createBook(newBook, loginUserId, bookId));
     }).catch(error => {
       console.log(error);
+    })
+}
+
+export const deleteBook = (id) => (dispatch) => {
+  axios.delete(`http://localhost:3002/books/${id}`)
+    .then(res => {
+      console.log(res);
+      dispatch(deleteOneBook(res.data))
     })
 }
 

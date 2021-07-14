@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import axios from 'axios';
-import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import {
   Link,
 } from 'react-router-dom';
-import { getMyBooks } from '../actions/index';
+import { getMyBooks, deleteBook } from '../actions/index';
+import Button from '@material-ui/core/Button';
 
 interface Props {
   loginUserId: string
@@ -44,6 +43,10 @@ function Mypage({ loginUserId }: Props) {
     setRegisteredBooks(myBooks)
   }, [myBooks]);
 
+  const deleteButton = (id) => {
+    dispatch(deleteBook(id))
+  }
+
   return (
     <div>
       <h2>登録した本</h2>
@@ -71,6 +74,7 @@ function Mypage({ loginUserId }: Props) {
                   <Typography>
                     {element.author}
                   </Typography>
+                  <Button variant="outlined" color="secondary" onClick={() => deleteButton(element.bookId)}>削除</Button>
                 </CardContent>
               </Card>
             </li>

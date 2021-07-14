@@ -1,4 +1,4 @@
-import { SET_MY_BOOKS, CREATE_BOOK } from '../actions';
+import { SET_MY_BOOKS, CREATE_BOOK, DELETE_ONE_BOOK } from '../actions';
 
 interface BookInfoType {
   bookId: string,
@@ -34,7 +34,7 @@ export default (state = initialState, action) => {
             caption: element.caption,
             itemUrl: element.itemUrl,
           }
-          state.bookArray.push(element);
+          state.bookArray.push(myBook);
         });
         console.log(state);
         return { ...state }
@@ -49,6 +49,16 @@ export default (state = initialState, action) => {
       state.userId = action.loginUserId;
       state.bookArray.push(newBook)
       return { ...state };
+    case DELETE_ONE_BOOK:
+      const target = state.bookArray.findIndex(element => element.bookId === action.id);
+      console.log(target)
+      if (target !== -1) {
+        state.bookArray.splice(target, 1);
+        console.log(state);
+        return { userId: state.userId, bookArray: [...state.bookArray] };
+      } else {
+        return { ...state };
+      }
     default:
       return state;
   }

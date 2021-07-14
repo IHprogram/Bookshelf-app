@@ -53,7 +53,7 @@ function App() {
           <Register />
         </Route>
         <Route exact path='/mypage'>
-          <Mypage />
+          <Mypage loginUserId={loginUserId} />
         </Route>
         <Route exact path='/'>
           <button onClick={() => console.log(loginUserState)}>確認</button>
