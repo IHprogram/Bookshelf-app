@@ -8,19 +8,41 @@ import Typography from '@material-ui/core/Typography';
 import {
   Link,
 } from 'react-router-dom';
+import { getMyBooks } from '../actions/index';
 
+interface Props {
+  loginUserId: string
+}
 
-function Mypage() {
-  const [registeredBooks, setRegisteredBooks] = useState([]);
+interface BookInfoType {
+  bookId: string,
+  title: string,
+  author: string,
+  image: string,
+  caption: string,
+  itemUrl: string,
+}
+
+interface UsersBooksType {
+  userId: string,
+  bookArray: BookInfoType[]
+}
+
+function Mypage({ loginUserId }: Props) {
+  const initialState: BookInfoType[] = [];
+
+  const [registeredBooks, setRegisteredBooks] = useState(initialState);
   const dispatch = useDispatch();
 
+  const myBooks: BookInfoType[] = useSelector((state: { Book: UsersBooksType }) => state.Book.bookArray);
+
   useEffect(() => {
-    axios.get('http://localhost:3002/books')
-      .then(res => {
-        console.log(res.data)
-        setRegisteredBooks(res.data);
-      })
-  }, [])
+    dispatch(getMyBooks(loginUserId));
+  }, []);
+
+  useEffect(() => {
+    setRegisteredBooks(myBooks)
+  }, [myBooks]);
 
   return (
     <div>

@@ -8,9 +8,20 @@ interface newUserType {
   password: string;
 }
 
+interface myBooksType {
+  _id: string;
+  title: string;
+  loginUserId: string;
+  itemUrl: string;
+  image: string;
+  caption: string;
+  author: string;
+}
+
 export const SET_USER_INFO = 'SET_USER_INFO';
 export const LOGOUT_USER = 'LOGOUT_USER';
 export const SET_SEARCH_RESULT = 'SET_SEARCH_RESULT';
+export const SET_MY_BOOKS = 'SET_MY_BOOKS';
 export const CREATE_BOOK = 'CREATE_BOOK';
 
 export const setUserInfo = (name, email) => {
@@ -41,6 +52,15 @@ export const setSearchResult = (result) => {
   )
 }
 
+export const setMyBooks = (myBooks) => {
+  return (
+    {
+      type: SET_MY_BOOKS,
+      myBooks
+    }
+  )
+}
+
 export const createBook = (bookInfo, loginUserId, bookId) => {
   return (
     {
@@ -50,6 +70,17 @@ export const createBook = (bookInfo, loginUserId, bookId) => {
       bookId
     }
   )
+}
+
+export const getMyBooks = (loginUserId) => (dispatch) => {
+  console.log(loginUserId);
+  axios.get('http://localhost:3002/books')
+    .then(res => {
+      console.log(res.data);
+      const myBooks: myBooksType[] = res.data.filter(element => element.loginUserId === loginUserId);
+      console.log(myBooks);
+      dispatch(setMyBooks(myBooks));
+    })
 }
 
 export const registerBook = (newBook, loginUserId) => (dispatch) => {

@@ -1,7 +1,7 @@
-import { CREATE_BOOK } from '../actions';
+import { SET_MY_BOOKS, CREATE_BOOK } from '../actions';
 
 interface BookInfoType {
-  bookId: string
+  bookId: string,
   title: string,
   author: string,
   image: string,
@@ -21,6 +21,26 @@ const initialState: UsersBooksType = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case SET_MY_BOOKS:
+      if (action.myBooks.length > 0) {
+        state.bookArray = [];
+        state.userId = action.myBooks[0].loginUserId;
+        action.myBooks.forEach(element => {
+          const myBook: BookInfoType = {
+            bookId: element._id,
+            title: element.title,
+            author: element.author,
+            image: element.image,
+            caption: element.caption,
+            itemUrl: element.itemUrl,
+          }
+          state.bookArray.push(element);
+        });
+        console.log(state);
+        return { ...state }
+      } else {
+        return { ...state }
+      }
     case CREATE_BOOK:
       const newBook = {
         ...action.bookInfo,
