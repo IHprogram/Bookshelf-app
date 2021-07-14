@@ -32,3 +32,15 @@ export const createBook = async (req, res) => {
     console.log(error);
   }
 }
+
+export const deleteBook = async (req, res) => {
+  console.log(req)
+  const id = req.params.id;
+  try {
+    await Book.deleteOne({ _id: id });
+
+    res.status(200).json(id);
+  } catch (error) {
+    console.log(error);
+  }
+}
