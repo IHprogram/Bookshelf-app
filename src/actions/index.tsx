@@ -24,6 +24,7 @@ export const SET_SEARCH_RESULT = 'SET_SEARCH_RESULT';
 export const SET_MY_BOOKS = 'SET_MY_BOOKS';
 export const CREATE_BOOK = 'CREATE_BOOK';
 export const DELETE_ONE_BOOK = 'DELETE_ONE_BOOK';
+export const ADD_NOTE = 'ADD_NOTE';
 
 export const setUserInfo = (name, email) => {
   return (
@@ -82,6 +83,16 @@ export const deleteOneBook = (id) => {
   )
 }
 
+export const addNote = (noteId, newNote) => {
+  return (
+    {
+      type: ADD_NOTE,
+      noteId,
+      newNote,
+    }
+  )
+}
+
 export const getMyBooks = (loginUserId) => (dispatch) => {
   console.log(loginUserId);
   axios.get('http://localhost:3002/books')
@@ -118,6 +129,25 @@ export const deleteBook = (id) => (dispatch) => {
     .then(res => {
       console.log(res);
       dispatch(deleteOneBook(res.data))
+    })
+}
+
+export const createNote = (purpose, point, explain, impression, bookId, loginUserId) => (dispatch) => {
+  axios.post('http://localhost:3002/notes', {
+    purpose,
+    point,
+    explain,
+    impression,
+    bookId,
+    loginUserId
+  })
+    .then(res => {
+      console.log('resです', res.data);
+      const noteId: string = res.data._id;
+      const newNote = res.data;
+      dispatch(addNote(noteId, newNote));
+    }).catch(error => {
+      console.log(error);
     })
 }
 

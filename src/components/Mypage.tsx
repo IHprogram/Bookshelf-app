@@ -74,6 +74,13 @@ function Mypage({ loginUserId }: Props) {
                   <Typography>
                     {element.author}
                   </Typography>
+                  <Link to={{
+                    pathname: `/noteform`,
+                    state: { bookId: element.bookId }
+                  }}
+                  >
+                    ノートを作成する
+                  </Link>
                   <Button variant="outlined" color="secondary" onClick={() => deleteButton(element.bookId)}>削除</Button>
                 </CardContent>
               </Card>

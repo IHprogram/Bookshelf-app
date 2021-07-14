@@ -15,6 +15,7 @@ import firebase from '../firebase/firebase';
 import { setUserInfo } from '../actions/index';
 import { UserInfo } from '../Types';
 import Detail from '../components/Detail';
+import NoteForm from '../components/NoteForm';
 
 function App() {
   const dispatch = useDispatch();
@@ -46,6 +47,9 @@ function App() {
         <Route exact path='/detail/:id'>
           <Detail loginUser={loginUser} loginUserId={loginUserId} />
         </Route>
+        <Route exact path='/noteform'>
+          <NoteForm loginUserId={loginUserId} />
+        </Route>
         <Route exact path='/login'>
           <Login />
         </Route>
@@ -56,7 +60,6 @@ function App() {
           <Mypage loginUserId={loginUserId} />
         </Route>
         <Route exact path='/'>
-          <button onClick={() => console.log(loginUserState)}>確認</button>
           <Home />
         </Route>
       </Switch>
