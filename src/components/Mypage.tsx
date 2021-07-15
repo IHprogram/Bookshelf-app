@@ -101,22 +101,24 @@ function Mypage({ loginUserId }: Props) {
                   <Typography>
                     {element.author}
                   </Typography>
-                  <Link to={{
-                    pathname: `/noteform`,
-                    state: { bookId: element.bookId }
-                  }}
-                  >
-                    ノートを作成する
-                  </Link>
-                  {
+                  <Typography>
+                    <Link to={{
+                      pathname: `/noteform`,
+                      state: { bookId: element.bookId }
+                    }}
+                    >
+                      ノートを作成する
+                    </Link>
+                  </Typography>
+                  <Typography>
                     <Link to={{
                       pathname: `/mynotes`,
-                      state: { bookId: element.bookId }
+                      state: { bookId: element.bookId, title: element.title }
                     }}
                     >
                       この本のノートを見る
                     </Link>
-                  }
+                  </Typography>
                   <Button variant="outlined" color="secondary" onClick={() => deleteButton(element.bookId)}>削除</Button>
                 </CardContent>
               </Card>
