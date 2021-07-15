@@ -13,9 +13,8 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles((theme) => ({
-  form: {
-    width: '100%',
-    marginTop: theme.spacing(3),
+  list: {
+    listStyle: 'none',
   }
 }));
 
@@ -63,7 +62,7 @@ function MyNotes() {
       }
       {notes.map((element: any, index: any) => {
         return (
-          <li key={index}>
+          <li key={index} className={classes.list}>
             <Card>
               <CardContent>
                 <Typography>

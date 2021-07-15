@@ -9,6 +9,7 @@ import {
 import { getMyBooks, deleteBook, setUserInfo } from '../actions/index';
 import Button from '@material-ui/core/Button';
 import firebase from '../firebase/firebase';
+import { makeStyles } from '@material-ui/core/styles';
 
 interface Props {
   loginUserId: string
@@ -28,6 +29,12 @@ interface UsersBooksType {
   bookArray: BookInfoType[]
 }
 
+const useStyles = makeStyles((theme) => ({
+  list: {
+    listStyle: 'none',
+  }
+}));
+
 function Mypage({ loginUserId }: Props) {
   const initialState: BookInfoType[] = [];
 
@@ -36,6 +43,8 @@ function Mypage({ loginUserId }: Props) {
   const dispatch = useDispatch();
 
   const myBooks: BookInfoType[] = useSelector((state: { Book: UsersBooksType }) => state.Book.bookArray);
+
+  const classes = useStyles();
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
@@ -74,7 +83,7 @@ function Mypage({ loginUserId }: Props) {
         }
         {registeredBooks.map((element: any, index: any) => {
           return (
-            <li key={index}>
+            <li key={index} className={classes.list}>
               <Card>
                 <CardContent>
                   <Typography>

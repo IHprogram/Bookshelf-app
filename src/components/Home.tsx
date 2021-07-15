@@ -8,6 +8,7 @@ import {
   Link,
 } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { makeStyles } from '@material-ui/core/styles';
 
 interface BookInfoType {
   title: string,
@@ -17,6 +18,12 @@ interface BookInfoType {
   caption: string,
   itemUrl: string
 }
+
+const useStyles = makeStyles((theme) => ({
+  list: {
+    listStyle: 'none',
+  }
+}));
 
 function Home() {
   const initial: BookInfoType[] = [];
@@ -28,6 +35,7 @@ function Home() {
     setSearchData(SearchResultState);
   }, [SearchResultState]);
 
+  const classes = useStyles();
 
   return (
     <Grid container alignItems="center" justifyContent="center">
@@ -40,7 +48,7 @@ function Home() {
         }
         {searchData.map((element: any, index: any) => {
           return (
-            <li key={index}>
+            <li key={index} className={classes.list}>
               <Card>
                 <CardContent>
                   <Typography>
