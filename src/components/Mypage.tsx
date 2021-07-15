@@ -6,8 +6,9 @@ import Typography from '@material-ui/core/Typography';
 import {
   Link,
 } from 'react-router-dom';
-import { getMyBooks, deleteBook } from '../actions/index';
+import { getMyBooks, deleteBook, setUserInfo } from '../actions/index';
 import Button from '@material-ui/core/Button';
+import firebase from '../firebase/firebase';
 
 interface Props {
   loginUserId: string
@@ -30,13 +31,30 @@ interface UsersBooksType {
 function Mypage({ loginUserId }: Props) {
   const initialState: BookInfoType[] = [];
 
-  const [registeredBooks, setRegisteredBooks] = useState(initialState);
+  const [registeredBooks, setRegisteredBooks] = useState(initialState),
+    [loginUserIdState, setLoginUserIdState] = useState<string>('');
   const dispatch = useDispatch();
 
   const myBooks: BookInfoType[] = useSelector((state: { Book: UsersBooksType }) => state.Book.bookArray);
 
   useEffect(() => {
-    dispatch(getMyBooks(loginUserId));
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        const userId: string | null = user.uid;
+        const name: string | null = user.displayName;
+        const email: string | null = user.email;
+        dispatch(setUserInfo(name, email));
+
+        if (loginUserId === "") {
+          console.log('空です！', loginUserId)
+          console.log(userId)
+          dispatch(getMyBooks(userId));
+        } else {
+          console.log('loginUserの中身はあります！', loginUserId)
+          dispatch(getMyBooks(loginUserId));
+        }
+      }
+    })
   }, []);
 
   useEffect(() => {
