@@ -1,5 +1,15 @@
 import Note from "../models/notes.js";
 
+export const getNotes = async (req, res) => {
+  try {
+    const notes = await Note.find();
+    console.log(notes)
+    res.status(200).json(notes);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export const createNote = async (req, res) => {
   console.log(req.body);
   const purpose = req.body.purpose;
