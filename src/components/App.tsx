@@ -16,6 +16,7 @@ import { setUserInfo } from '../actions/index';
 import { UserInfo } from '../Types';
 import Detail from '../components/Detail';
 import NoteForm from '../components/NoteForm';
+import MyNotes from '../components/MyNotes';
 
 function App() {
   const dispatch = useDispatch();
@@ -46,6 +47,9 @@ function App() {
       <Switch>
         <Route exact path='/detail/:id'>
           <Detail loginUser={loginUser} loginUserId={loginUserId} />
+        </Route>
+        <Route exact path='/mynotes'>
+          <MyNotes />
         </Route>
         <Route exact path='/noteform'>
           <NoteForm loginUserId={loginUserId} />

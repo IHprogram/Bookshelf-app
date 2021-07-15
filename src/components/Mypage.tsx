@@ -99,6 +99,15 @@ function Mypage({ loginUserId }: Props) {
                   >
                     ノートを作成する
                   </Link>
+                  {
+                    <Link to={{
+                      pathname: `/mynotes`,
+                      state: { bookId: element.bookId }
+                    }}
+                    >
+                      この本のノートを見る
+                    </Link>
+                  }
                   <Button variant="outlined" color="secondary" onClick={() => deleteButton(element.bookId)}>削除</Button>
                 </CardContent>
               </Card>

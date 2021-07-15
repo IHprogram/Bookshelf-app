@@ -24,6 +24,7 @@ export const SET_SEARCH_RESULT = 'SET_SEARCH_RESULT';
 export const SET_MY_BOOKS = 'SET_MY_BOOKS';
 export const CREATE_BOOK = 'CREATE_BOOK';
 export const DELETE_ONE_BOOK = 'DELETE_ONE_BOOK';
+export const SET_NOTES = 'SET_NOTES';
 export const ADD_NOTE = 'ADD_NOTE';
 
 export const setUserInfo = (name, email) => {
@@ -83,6 +84,15 @@ export const deleteOneBook = (id) => {
   )
 }
 
+export const setNotes = (newNotes) => {
+  return (
+    {
+      type: SET_NOTES,
+      newNotes,
+    }
+  )
+}
+
 export const addNote = (noteId, newNote) => {
   return (
     {
@@ -128,7 +138,22 @@ export const deleteBook = (id) => (dispatch) => {
   axios.delete(`http://localhost:3002/books/${id}`)
     .then(res => {
       console.log(res);
-      dispatch(deleteOneBook(res.data))
+      dispatch(deleteOneBook(res.data));
+    })
+}
+
+export const getNotes = (bookId) => (dispatch) => {
+  console.log(bookId);
+  axios.get('http://localhost:3002/notes')
+    .then(res => {
+      console.log('responseデータです', res.data)
+      const newNotes = res.data.filter(element => element.bookId === bookId);
+      console.log(newNotes);
+      if (newNotes.length > 0) {
+        dispatch(setNotes(newNotes));
+      } else {
+        console.log('newNotesは空です')
+      }
     })
 }
 
@@ -142,7 +167,6 @@ export const createNote = (purpose, point, explain, impression, bookId, loginUse
     loginUserId
   })
     .then(res => {
-      console.log('resです', res.data);
       const noteId: string = res.data._id;
       const newNote = res.data;
       dispatch(addNote(noteId, newNote));

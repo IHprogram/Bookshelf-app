@@ -1,7 +1,7 @@
-import { ADD_NOTE } from '../actions';
+import { SET_NOTES, ADD_NOTE } from '../actions';
 
 interface NoteType {
-  noteId: string
+  noteId: string,
   purpose: string,
   point: string,
   explain: string,
@@ -14,6 +14,21 @@ const initialState: NoteType[] = [];
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case SET_NOTES:
+      state = [];
+      action.newNotes.forEach(element => {
+        const myNotes: NoteType = {
+          noteId: element._id,
+          purpose: element.purpose,
+          point: element.point,
+          explain: element.explain,
+          impression: element.impression,
+          bookId: element.bookId,
+          loginUserId: element.loginUserId,
+        }
+        state.push(myNotes)
+      })
+      return [...state];
     case ADD_NOTE:
       const newNote: NoteType = {
         noteId: action.noteId,
