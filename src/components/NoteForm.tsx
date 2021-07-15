@@ -66,8 +66,10 @@ function NoteForm({ loginUserId }: Props) {
 
   return (
     <div>
-      <h2>ノート作成画面</h2>
-      <Button onClick={() => console.log(bookId)}>確認</Button>
+      <Grid container alignItems='center' justifyContent='center' spacing={2}>
+        <h2>ノート作成画面</h2>
+      </Grid>
+      {/* <Button onClick={() => console.log(bookId)}>確認</Button> */}
 
       <form className={classes.form} noValidate>
         <Grid container justifyContent='center' spacing={2}>
