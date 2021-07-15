@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import {
-  useLocation
+  useLocation,
+  Link
 } from 'react-router-dom';
-import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -19,7 +18,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface bookIdType {
-  bookId: string
+  bookId: string,
+  title: string
 }
 
 interface NoteType {
@@ -38,7 +38,10 @@ function MyNotes() {
 
   const location = useLocation();
   const state = location.state as bookIdType;
+  console.log(state)
   const bookId: string = state.bookId;
+  const title: string = state.title;
+
   const classes = useStyles();
 
   const notesState = useSelector((state: { Note: NoteType[] }) => state.Note);
@@ -56,26 +59,23 @@ function MyNotes() {
 
   return (
     <div>
-      <h3>ノート一覧</h3>
+      <h3>「{title}」のノート一覧</h3>
       {notes.length === 0 &&
-        <p>登録した本はありません。</p>
+        <p>作成したノートはありません。</p>
       }
-      {notes.map((element: any, index: any) => {
+      {notes.map((element: NoteType, index: number) => {
         return (
           <li key={index} className={classes.list}>
             <Card>
               <CardContent>
                 <Typography>
-                  読む目的: {element.purpose}
-                </Typography>
-                <Typography>
-                  この本のポイント: {element.purpose}
-                </Typography>
-                <Typography>
-                  説明: {element.explain}
-                </Typography>
-                <Typography>
-                  感想: {element.impression}
+                  <Link to={{
+                    pathname: `/notedetail/:id`,
+                    state: { notesInfo: element }
+                  }}
+                  >
+                    読む目的: {element.purpose}
+                  </Link>
                 </Typography>
               </CardContent>
             </Card>
