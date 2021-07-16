@@ -26,6 +26,7 @@ export const CREATE_BOOK = 'CREATE_BOOK';
 export const DELETE_ONE_BOOK = 'DELETE_ONE_BOOK';
 export const SET_NOTES = 'SET_NOTES';
 export const ADD_NOTE = 'ADD_NOTE';
+export const DELETE_ONE_NOTE = 'DELETE_ONE_NOTE';
 
 export const setUserInfo = (name, email) => {
   return (
@@ -103,6 +104,15 @@ export const addNote = (noteId, newNote) => {
   )
 }
 
+export const deleteOneNote = (id) => {
+  return (
+    {
+      type: DELETE_ONE_NOTE,
+      id,
+    }
+  )
+}
+
 export const getMyBooks = (loginUserId) => (dispatch) => {
   console.log(loginUserId);
   axios.get('http://localhost:3002/books')
@@ -172,6 +182,14 @@ export const createNote = (purpose, point, explain, impression, bookId, loginUse
       dispatch(addNote(noteId, newNote));
     }).catch(error => {
       console.log(error);
+    })
+}
+
+export const deleteNote = (id) => (dispatch) => {
+  axios.delete(`http://localhost:3002/notes/${id}`)
+    .then(res => {
+      console.log(res);
+      dispatch(deleteOneNote(res.data));
     })
 }
 

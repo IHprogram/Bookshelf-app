@@ -4,6 +4,10 @@ import {
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import { deleteNote } from '../actions/index';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 interface NoteType {
   noteId: string,
@@ -24,6 +28,14 @@ function NoteDetail() {
   const state = location.state as StateType;
   const notesInfo: NoteType = state.notesInfo;
 
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const deleteButton = () => {
+    dispatch(deleteNote(notesInfo.noteId));
+    history.push('/mypage');
+  }
+
   return (
     <div>
       <p>ノートの詳細です</p>
@@ -33,7 +45,7 @@ function NoteDetail() {
             読む目的: {notesInfo.purpose}
           </Typography>
           <Typography>
-            この本のポイント: {notesInfo.purpose}
+            この本のポイント: {notesInfo.point}
           </Typography>
           <Typography>
             説明: {notesInfo.explain}
@@ -41,6 +53,7 @@ function NoteDetail() {
           <Typography>
             感想: {notesInfo.impression}
           </Typography>
+          <Button variant="outlined" color="secondary" onClick={deleteButton}>削除</Button>
         </CardContent>
       </Card>
     </div>

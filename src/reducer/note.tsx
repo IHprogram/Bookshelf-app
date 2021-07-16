@@ -1,4 +1,4 @@
-import { SET_NOTES, ADD_NOTE } from '../actions';
+import { SET_NOTES, ADD_NOTE, DELETE_ONE_NOTE } from '../actions';
 
 interface NoteType {
   noteId: string,
@@ -40,6 +40,18 @@ export default (state = initialState, action) => {
         loginUserId: action.newNote.loginUserId
       }
       return [...state, newNote];
+    case DELETE_ONE_NOTE:
+      console.log(state)
+      console.log(action)
+      const target = state.findIndex(element => element.noteId === action.id);
+      console.log(target)
+      if (target !== -1) {
+        state.splice(target, 1);
+        console.log(state);
+        return [...state]
+      } else {
+        return [...state];
+      }
     default:
       return state;
   }
