@@ -15,7 +15,8 @@ import firebase from '../firebase/firebase';
 import { setUserInfo } from '../actions/index';
 import { UserInfo } from '../Types';
 import Detail from '../components/Detail';
-import NoteForm from '../components/NoteForm';
+import NoteCreateForm from './NoteCreateForm';
+import NoteEditForm from './NoteEditForm';
 import MyNotes from '../components/MyNotes';
 import NoteDetail from '../components/NoteDetail';
 
@@ -56,7 +57,10 @@ function App() {
           <MyNotes />
         </Route>
         <Route exact path='/noteform'>
-          <NoteForm loginUserId={loginUserId} />
+          <NoteCreateForm loginUserId={loginUserId} />
+        </Route>
+        <Route exact path='/noteeditform'>
+          <NoteEditForm />
         </Route>
         <Route exact path='/login'>
           <Login />
