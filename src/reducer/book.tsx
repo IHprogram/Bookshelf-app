@@ -36,7 +36,6 @@ export default (state = initialState, action) => {
           }
           state.bookArray.push(myBook);
         });
-        console.log(state);
         return { ...state }
       } else {
         return { ...state }
@@ -51,10 +50,8 @@ export default (state = initialState, action) => {
       return { ...state };
     case DELETE_ONE_BOOK:
       const target = state.bookArray.findIndex(element => element.bookId === action.id);
-      console.log(target)
       if (target !== -1) {
         state.bookArray.splice(target, 1);
-        console.log(state);
         return { userId: state.userId, bookArray: [...state.bookArray] };
       } else {
         return { ...state };

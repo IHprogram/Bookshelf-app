@@ -38,7 +38,6 @@ function MyNotes() {
 
   const location = useLocation();
   const state = location.state as bookIdType;
-  console.log(state)
   const bookId: string = state.bookId;
   const title: string = state.title;
 

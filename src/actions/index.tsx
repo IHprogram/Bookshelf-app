@@ -114,18 +114,14 @@ export const deleteOneNote = (id) => {
 }
 
 export const getMyBooks = (loginUserId) => (dispatch) => {
-  console.log(loginUserId);
   axios.get('http://localhost:3002/books')
     .then(res => {
-      console.log(res.data);
       const myBooks: myBooksType[] = res.data.filter(element => element.loginUserId === loginUserId);
-      console.log(myBooks);
       dispatch(setMyBooks(myBooks));
     })
 }
 
 export const registerBook = (newBook, loginUserId) => (dispatch) => {
-  console.log(newBook);
   axios.post('http://localhost:3002/books', {
     title: newBook.title,
     author: newBook.author,
@@ -135,9 +131,7 @@ export const registerBook = (newBook, loginUserId) => (dispatch) => {
     loginUserId
   })
     .then(res => {
-      console.log('resです', res)
       const bookId: string = res.data._id;
-      console.log(bookId);
       dispatch(createBook(newBook, loginUserId, bookId));
     }).catch(error => {
       console.log(error);
@@ -147,18 +141,14 @@ export const registerBook = (newBook, loginUserId) => (dispatch) => {
 export const deleteBook = (id) => (dispatch) => {
   axios.delete(`http://localhost:3002/books/${id}`)
     .then(res => {
-      console.log(res);
       dispatch(deleteOneBook(res.data));
     })
 }
 
 export const getNotes = (bookId) => (dispatch) => {
-  console.log(bookId);
   axios.get('http://localhost:3002/notes')
     .then(res => {
-      console.log('responseデータです', res.data)
       const newNotes = res.data.filter(element => element.bookId === bookId);
-      console.log(newNotes);
       if (newNotes.length > 0) {
         dispatch(setNotes(newNotes));
       } else {
@@ -188,20 +178,17 @@ export const createNote = (purpose, point, explain, impression, bookId, loginUse
 export const deleteNote = (id) => (dispatch) => {
   axios.delete(`http://localhost:3002/notes/${id}`)
     .then(res => {
-      console.log(res);
       dispatch(deleteOneNote(res.data));
     })
 }
 
 export const fetchBooksInfo = (searchWord) => (dispatch) => {
-  console.log(searchWord);
   axios.get("https://app.rakuten.co.jp/services/api/BooksBook/Search/20170404?", {
     params: {
       applicationId: rakutenid, //楽天でログインし、自分のアプリケーションIDを取得
       title: searchWord, //後で変数にし、検索フォームのキーワードで検索できるようにする
     },
   }).then(res => {
-    console.log(res.data.Items);
     dispatch(setSearchResult(res.data.Items))
   });
 }

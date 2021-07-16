@@ -55,11 +55,8 @@ function Mypage({ loginUserId }: Props) {
         dispatch(setUserInfo(name, email));
 
         if (loginUserId === "") {
-          console.log('空です！', loginUserId)
-          console.log(userId)
           dispatch(getMyBooks(userId));
         } else {
-          console.log('loginUserの中身はあります！', loginUserId)
           dispatch(getMyBooks(loginUserId));
         }
       }

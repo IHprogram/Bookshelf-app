@@ -24,10 +24,8 @@ export default (state = initialState, action) => {
           caption: element.Item.itemCaption,
           itemUrl: element.Item.itemUrl
         }
-        console.log(oneBookInfo)
         state.push(oneBookInfo)
       })
-      console.log(state);
       return [...state];
     default:
       return state;

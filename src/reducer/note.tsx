@@ -41,13 +41,9 @@ export default (state = initialState, action) => {
       }
       return [...state, newNote];
     case DELETE_ONE_NOTE:
-      console.log(state)
-      console.log(action)
       const target = state.findIndex(element => element.noteId === action.id);
-      console.log(target)
       if (target !== -1) {
         state.splice(target, 1);
-        console.log(state);
         return [...state]
       } else {
         return [...state];
