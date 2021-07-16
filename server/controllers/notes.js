@@ -35,6 +35,29 @@ export const createNote = async (req, res) => {
   }
 }
 
+export const updateNote = async (req, res) => {
+  console.log(req.body);
+  const noteId = req.body.noteId;
+  const purpose = req.body.purpose;
+  const point = req.body.point;
+  const explain = req.body.explain;
+  const impression = req.body.impression;
+
+  try {
+    await Note.findOneAndUpdate({ _id: noteId }, { $set: { purpose, point, explain, impression } })
+    const updatedNote = {
+      noteId,
+      purpose,
+      point,
+      explain,
+      impression
+    };
+    res.status(200).json(updatedNote);
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export const deleteNote = async (req, res) => {
   console.log('リクエストです', req.params.id)
   const id = req.params.id;
