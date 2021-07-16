@@ -34,3 +34,14 @@ export const createNote = async (req, res) => {
     console.log(error);
   }
 }
+
+export const deleteNote = async (req, res) => {
+  console.log('リクエストです', req.params.id)
+  const id = req.params.id;
+  try {
+    await Note.deleteOne({ _id: id });
+    res.status(200).json(id);
+  } catch (error) {
+    console.log(error);
+  }
+}
