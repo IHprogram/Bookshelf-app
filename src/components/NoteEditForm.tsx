@@ -7,15 +7,11 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux';
-import { createNote } from '../actions/index';
+import { editNote } from '../actions/index';
 import { useHistory } from 'react-router-dom';
 
-interface bookIdType {
-  bookId: string
-}
-
-interface Props {
-  loginUserId: string
+interface noteIdType {
+  noteId: string
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -28,10 +24,10 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function NoteForm({ loginUserId }: Props) {
+function NoteEditForm() {
   const location = useLocation();
-  const state = location.state as bookIdType;
-  const bookId: string = state.bookId;
+  const state = location.state as noteIdType;
+  const noteId: string = state.noteId;
   const classes = useStyles();
 
   const dispatch = useDispatch();
@@ -60,14 +56,14 @@ function NoteForm({ loginUserId }: Props) {
   }
 
   const submit = () => {
-    dispatch(createNote(purpose, point, explain, impression, bookId, loginUserId));
+    dispatch(editNote(noteId, purpose, point, explain, impression));
     history.push('/mypage')
   }
 
   return (
     <div>
       <Grid container alignItems='center' justifyContent='center' spacing={2}>
-        <h2>ノート作成画面</h2>
+        <h2>ノート編集画面</h2>
       </Grid>
 
       <form className={classes.form} noValidate>
@@ -137,7 +133,7 @@ function NoteForm({ loginUserId }: Props) {
               color="primary"
               onClick={submit}
             >
-              ノートを作成する
+              編集する
             </Button>
           </Grid>
         </Grid>
@@ -146,4 +142,4 @@ function NoteForm({ loginUserId }: Props) {
   )
 }
 
-export default NoteForm
+export default NoteEditForm
