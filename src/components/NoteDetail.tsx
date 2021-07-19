@@ -1,5 +1,6 @@
 import {
-  useLocation
+  useLocation,
+  Link
 } from 'react-router-dom';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -53,6 +54,13 @@ function NoteDetail() {
           <Typography>
             感想: {notesInfo.impression}
           </Typography>
+          <Link to={{
+            pathname: `/noteeditform`,
+            state: { noteId: notesInfo.noteId }
+          }}
+          >
+            編集する
+          </Link>
           <Button variant="outlined" color="secondary" onClick={deleteButton}>削除</Button>
         </CardContent>
       </Card>

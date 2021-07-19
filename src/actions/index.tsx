@@ -26,6 +26,7 @@ export const CREATE_BOOK = 'CREATE_BOOK';
 export const DELETE_ONE_BOOK = 'DELETE_ONE_BOOK';
 export const SET_NOTES = 'SET_NOTES';
 export const ADD_NOTE = 'ADD_NOTE';
+export const UPDATE_NOTE = 'UPDATE_NOTE';
 export const DELETE_ONE_NOTE = 'DELETE_ONE_NOTE';
 
 export const setUserInfo = (name, email) => {
@@ -104,6 +105,15 @@ export const addNote = (noteId, newNote) => {
   )
 }
 
+export const updateNote = (newNote) => {
+  return (
+    {
+      type: UPDATE_NOTE,
+      newNote
+    }
+  )
+}
+
 export const deleteOneNote = (id) => {
   return (
     {
@@ -174,6 +184,23 @@ export const createNote = (purpose, point, explain, impression, bookId, loginUse
       console.log(error);
     })
 }
+
+export const editNote = (noteId, purpose, point, explain, impression) => (dispatch) => {
+  console.log(noteId, purpose, point, explain, impression);
+  const newNote = {
+    noteId,
+    purpose,
+    point,
+    explain,
+    impression
+  };
+  axios.put(`http://localhost:3002/notes/${noteId}`, newNote)
+    .then(res => {
+      console.log(res.data)
+      dispatch(updateNote(newNote));
+    })
+}
+
 
 export const deleteNote = (id) => (dispatch) => {
   axios.delete(`http://localhost:3002/notes/${id}`)
