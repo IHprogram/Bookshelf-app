@@ -91,3 +91,24 @@ describe('Actions', () => {
   })
 })
 
+describe('Reducers', () => {
+  test('初期値の確認', () => {
+    const state = undefined;
+    const action = {};
+    const result = reducer(state, action);
+    const expected = {
+      User: {
+        name: '',
+        email: '',
+        login_user: false
+      },
+      Book: {
+        bookArray: [],
+        userId: ''
+      },
+      Note: [],
+      Search: []
+    }
+    expect(result).toEqual(expected)
+  })
+})

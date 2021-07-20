@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
-import Header from '../components/Header'
+import Header from '../components/Header';
+import Mypage from '../components/Mypage';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
@@ -65,5 +66,36 @@ describe('ヘッダーのテキストの確認！', () => {
     render(<Provider store={store}><MemoryRouter><Header loginUser={loginUser} /></MemoryRouter></Provider>);
     const linkElement = screen.getByText('ログアウト');
     expect(linkElement).toBeInTheDocument();
+  })
+})
+
+describe('マイページのテキスト確認', () => {
+  test('「タイトル」が表示されていることを確認', () => {
+    const loginUser = true;
+    render(<Provider store={store}><MemoryRouter><Mypage loginUser={loginUser} /></MemoryRouter></Provider>);
+    const linkElement = screen.getByText('登録した本');
+    expect(linkElement).toBeInTheDocument();
+  })
+})
+
+describe('Reducer', () => {
+  test('初期値の確認', () => {
+    const state = undefined;
+    const action = {};
+    const result = reducer(state, action);
+    const expected = {
+      User: {
+        name: '',
+        email: '',
+        login_user: false
+      },
+      Book: {
+        bookArray: [],
+        userId: ''
+      },
+      Note: [],
+      Search: []
+    };
+    expect(result).toEqual(expected)
   })
 })
