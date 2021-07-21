@@ -34,23 +34,6 @@ const create = () => {
   return { store2, next, invoke }
 }
 
-describe('axiosによる非同期通信', () => {
-  test('getmyBooksのテスト', () => {
-    const books = [{
-      _id: 'id',
-      title: 'キャラクターいっぱいのちぎりパン',
-      author: "毛間内あゆみ/宮崎真美",
-      image: 'https://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/6263/978483...',
-      cation: '',
-      itemUrl: "https://books.rakuten.co.jp/rb/16536410/",
-      loginUserId: "rkli8S9GL7WJgzsJDazhc0vFuc33"
-    }];
-    const response = { data: books };
-    axios.get.mockResolvedValue(response);
-    return getMyBooks.then(data => console.log(data));
-  })
-})
-
 describe('非同期ActionCreatorに関するテスト', () => {
   test('getMyBooksの確認', () => {
     const { next, invoke } = create();

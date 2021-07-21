@@ -7,9 +7,42 @@ import thunk from 'redux-thunk';
 import reducer from '../reducer/index.tsx';
 import { MemoryRouter } from 'react-router-dom';
 import { setUserInfo, logoutUser } from '../actions';
-
+import { createMemoryHistory } from 'history';
+import { Router } from "react-router";
 
 const store = createStore(reducer, applyMiddleware(thunk));
+
+describe('パスに関するテスト', () => {
+  test('ログイン画面のパスをテスト', () => {
+    const history = createMemoryHistory();
+    history.push('/login')
+    render(
+      <Provider store={store}>
+        <MemoryRouter>
+          <Router history={history}>
+            <Login />
+          </Router>
+        </MemoryRouter>
+      </Provider>
+    )
+    expect(history.location.pathname).toBe("/login");
+  })
+
+  test('ユーザー登録画面のパスをテスト', () => {
+    const history = createMemoryHistory();
+    history.push('/register')
+    render(
+      <Provider store={store}>
+        <MemoryRouter>
+          <Router history={history}>
+            <Register />
+          </Router>
+        </MemoryRouter>
+      </Provider>
+    )
+    expect(history.location.pathname).toBe("/register");
+  })
+})
 
 describe('テキストが表示されているかの確認', () => {
   describe('ログイン画面のテキスト確認', () => {
