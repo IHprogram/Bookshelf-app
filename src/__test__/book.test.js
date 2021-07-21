@@ -6,7 +6,10 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import reducer from '../reducer/index.tsx';
 import { MemoryRouter } from 'react-router-dom';
-import { setSearchResult, setMyBooks, createBook, deleteOneBook } from '../actions/index.tsx'
+import { setSearchResult, setMyBooks, createBook, deleteOneBook, getMyBooks } from '../actions/index.tsx'
+import axios from 'axios';
+import axiosMockAdapter from 'axios-mock-adapter';
+import configureStore from 'redux-mock-store';
 
 const store = createStore(reducer, applyMiddleware(thunk));
 const middlewares = [thunk];
@@ -31,6 +34,62 @@ const create = () => {
   return { store2, next, invoke }
 }
 
+describe('axiosによる非同期通信', () => {
+  test('getmyBooksのテスト', () => {
+    const books = [{
+      _id: 'id',
+      title: 'キャラクターいっぱいのちぎりパン',
+      author: "毛間内あゆみ/宮崎真美",
+      image: 'https://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/6263/978483...',
+      cation: '',
+      itemUrl: "https://books.rakuten.co.jp/rb/16536410/",
+      loginUserId: "rkli8S9GL7WJgzsJDazhc0vFuc33"
+    }];
+    const response = { data: books };
+    axios.get.mockResolvedValue(response);
+    return getMyBooks.then(data => console.log(data));
+  })
+})
+
+describe('非同期ActionCreatorに関するテスト', () => {
+  test('getMyBooksの確認', () => {
+    const { next, invoke } = create();
+    const action = { type: 'SET_MY_BOOKS' };
+    invoke(action)
+    expect(next).toHaveBeenCalledWith(action)
+  })
+
+  test('addTweetの確認', () => {
+    const { next, invoke } = create();
+    const action = { type: 'CREATE_BOOK' };
+    invoke(action)
+    expect(next).toHaveBeenCalledWith(action)
+  })
+
+  test('deleteTweetの確認', () => {
+    const { next, invoke } = create();
+    const action = { type: 'DELETE_ONE_BOOK' };
+    invoke(action)
+    expect(next).toHaveBeenCalledWith(action)
+  })
+
+  test('関数の呼び出しを確認', () => {
+    const { invoke } = create()
+    const fn = jest.fn();
+    invoke(fn)
+    expect(fn).toHaveBeenCalled()
+  })
+
+  test('dispatchとgetStateを返すことを確認', () => {
+    const { store2, invoke } = create();
+    invoke((dispatch, getState) => {
+      dispatch('SET_MY_BOOKS');
+      getState();
+    })
+    expect(store2.dispatch).toHaveBeenCalledWith('SET_MY_BOOKS')
+    expect(store2.getState).toHaveBeenCalled()
+  })
+})
 
 describe('ヘッダーのテキストの確認！', () => {
 
