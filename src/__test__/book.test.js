@@ -1,5 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import Header from '../components/Header';
+import Home from '../components/Home';
+import Detail from '../components/Detail';
 import Mypage from '../components/Mypage';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
@@ -7,9 +9,8 @@ import thunk from 'redux-thunk';
 import reducer from '../reducer/index.tsx';
 import { MemoryRouter } from 'react-router-dom';
 import { setSearchResult, setMyBooks, createBook, deleteOneBook, getMyBooks } from '../actions/index.tsx'
-import axios from 'axios';
-import axiosMockAdapter from 'axios-mock-adapter';
-import configureStore from 'redux-mock-store';
+import { createMemoryHistory } from 'history';
+import { Router } from "react-router";
 
 const store = createStore(reducer, applyMiddleware(thunk));
 const middlewares = [thunk];
@@ -33,6 +34,23 @@ const create = () => {
   const invoke = action => thunk2(store2)(next)(action)
   return { store2, next, invoke }
 }
+
+describe('パスに関するテスト', () => {
+  test('トップページのパスをテスト', () => {
+    const history = createMemoryHistory();
+    history.push('/')
+    render(
+      <Provider store={store}>
+        <MemoryRouter>
+          <Router history={history}>
+            <Home />
+          </Router>
+        </MemoryRouter>
+      </Provider>
+    )
+    expect(history.location.pathname).toBe("/");
+  })
+})
 
 describe('非同期ActionCreatorに関するテスト', () => {
   test('getMyBooksの確認', () => {
