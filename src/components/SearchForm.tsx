@@ -23,9 +23,9 @@ function SearchForm() {
 
   return (
     <Grid container alignItems="center" justifyContent="center">
-      <TextField variant='outlined' onChange={inputSearchWord} />
+      <TextField variant='outlined' onChange={inputSearchWord} aria-label="searchword" />
       <Button onClick={submit}>
-        <SearchIcon />
+        検索 <SearchIcon />
       </Button>
     </Grid>
   )

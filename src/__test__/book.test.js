@@ -3,6 +3,7 @@ import Header from '../components/Header';
 import Home from '../components/Home';
 import Detail from '../components/Detail';
 import Mypage from '../components/Mypage';
+import SearchForm from '../components/SearchForm';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
@@ -36,19 +37,21 @@ const create = () => {
 }
 
 describe('書籍検索機能に関するテスト', () => {
-  test('書籍検索機能をテスト', () => {
+  test('書籍検索フォームの入力値を取り出せていることをテスト', () => {
     const history = createMemoryHistory();
     history.push('/')
     render(
       <Provider store={store}>
         <MemoryRouter>
           <Router history={history}>
-            <Home />
+            <SearchForm />
           </Router>
         </MemoryRouter>
       </Provider>
     )
-    expect(history.location.pathname).toBe("/");
+    const searchInput = screen.getByLabelText('searchword').querySelector("input");
+    fireEvent.change(searchInput, { target: { value: 'JavaScript' } });
+    expect(searchInput.value).toEqual('JavaScript');
   })
 })
 
