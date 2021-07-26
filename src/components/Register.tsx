@@ -91,6 +91,7 @@ const SignUp = () => {
                 name="name"
                 autoComplete="name"
                 onChange={inputName}
+                aria-label="name"
               />
             </Grid>
             <Grid item xs={12}>
@@ -103,6 +104,7 @@ const SignUp = () => {
                 name="email"
                 autoComplete="email"
                 onChange={inputEmail}
+                aria-label="email"
               />
             </Grid>
             <Grid item xs={12}>
@@ -116,6 +118,7 @@ const SignUp = () => {
                 id="password"
                 autoComplete="current-password"
                 onChange={inputPassword}
+                aria-label="password"
               />
             </Grid>
           </Grid>

@@ -12,6 +12,25 @@ import { Router } from "react-router";
 
 const store = createStore(reducer, applyMiddleware(thunk));
 
+describe('ユーザー登録に関するテスト', () => {
+  test('ユーザー登録画面の各フォームの値を取り出せていることをテスト', () => {
+    render(<Provider store={store}><MemoryRouter><Register /></MemoryRouter></Provider>);
+    const nameInput = screen.getByLabelText('name').querySelector("input");
+    const emailInput = screen.getByLabelText('email').querySelector("input");
+    const passwordInput = screen.getByLabelText('password').querySelector("input");
+
+    // fireEvent関数で各フォームに値を入力
+    fireEvent.change(nameInput, { target: { value: 'テスト名' } });
+    fireEvent.change(emailInput, { target: { value: 'test@test.com' } });
+    fireEvent.change(passwordInput, { target: { value: 'a12345' } });
+
+    // フォームの値が一致していることを検証
+    expect(nameInput.value).toEqual('テスト名');
+    expect(emailInput.value).toEqual('test@test.com');
+    expect(passwordInput.value).toEqual('a12345');
+  })
+})
+
 describe('パスに関するテスト', () => {
   test('ログイン画面のパスをテスト', () => {
     const history = createMemoryHistory();
