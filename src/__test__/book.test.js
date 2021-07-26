@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import Header from '../components/Header';
 import Home from '../components/Home';
 import Detail from '../components/Detail';
@@ -34,6 +34,23 @@ const create = () => {
   const invoke = action => thunk2(store2)(next)(action)
   return { store2, next, invoke }
 }
+
+describe('書籍検索機能に関するテスト', () => {
+  test('書籍検索機能をテスト', () => {
+    const history = createMemoryHistory();
+    history.push('/')
+    render(
+      <Provider store={store}>
+        <MemoryRouter>
+          <Router history={history}>
+            <Home />
+          </Router>
+        </MemoryRouter>
+      </Provider>
+    )
+    expect(history.location.pathname).toBe("/");
+  })
+})
 
 describe('パスに関するテスト', () => {
   test('トップページのパスをテスト', () => {

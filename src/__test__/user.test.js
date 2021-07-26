@@ -9,6 +9,8 @@ import { MemoryRouter } from 'react-router-dom';
 import { setUserInfo, logoutUser } from '../actions';
 import { createMemoryHistory } from 'history';
 import { Router } from "react-router";
+import note from '../reducer/note';
+import Header from '../components/Header';
 
 const store = createStore(reducer, applyMiddleware(thunk));
 
@@ -28,6 +30,28 @@ describe('ユーザー登録に関するテスト', () => {
     expect(nameInput.value).toEqual('テスト名');
     expect(emailInput.value).toEqual('test@test.com');
     expect(passwordInput.value).toEqual('a12345');
+  })
+
+  test('ユーザー登録機能をテスト', () => {
+    const history = createMemoryHistory();
+    history.push('/register');
+    expect(history.location.pathname).toBe("/register");
+
+    render(<Provider store={store}><MemoryRouter><Router history={history}><Register /></Router></MemoryRouter></Provider>);
+
+    const nameInput = screen.getByLabelText('name').querySelector("input");
+    const emailInput = screen.getByLabelText('email').querySelector("input");
+    const passwordInput = screen.getByLabelText('password').querySelector("input");
+
+    // fireEvent関数で各フォームに値を入力
+    fireEvent.change(nameInput, { target: { value: 'テスト名' } });
+    fireEvent.change(emailInput, { target: { value: 'test@test.com' } });
+    fireEvent.change(passwordInput, { target: { value: 'a12345' } });
+
+    const registerButton = screen.getByText('登録する');
+    fireEvent.click(registerButton);
+
+    expect(history.location.pathname).toBe("/");
   })
 })
 
