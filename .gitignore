@@ -26,6 +26,5 @@ package-lock.json
 ts-config.json
 yarn.lock
 server/node_modules
-server/mongouri.js
 
 .env
