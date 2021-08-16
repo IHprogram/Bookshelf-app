@@ -29,7 +29,7 @@ export const ADD_NOTE = 'ADD_NOTE';
 export const UPDATE_NOTE = 'UPDATE_NOTE';
 export const DELETE_ONE_NOTE = 'DELETE_ONE_NOTE';
 
-export const setUserInfo = (name, email) => {
+export const setUserInfo = (name: string | null, email: string | null) => {
   return (
     {
       type: SET_USER_INFO,
