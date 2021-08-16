@@ -17,12 +17,12 @@ export default (state = initialState, action) => {
       state = [];
       action.result.forEach(element => {
         const oneBookInfo: BookInfoType = {
-          title: element.Item.title,
-          author: element.Item.author,
-          image: element.Item.largeImageUrl,
-          price: element.Item.itemPrice,
-          caption: element.Item.itemCaption,
-          itemUrl: element.Item.itemUrl
+          title: element.title,
+          author: element.author,
+          image: element.image,
+          price: element.price,
+          caption: element.caption,
+          itemUrl: element.itemUrl
         }
         state.push(oneBookInfo)
       })

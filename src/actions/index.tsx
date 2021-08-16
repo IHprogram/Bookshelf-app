@@ -18,6 +18,15 @@ interface myBooksType {
   author: string;
 }
 
+interface searchResultType {
+  title: string;
+  itemUrl: string;
+  image: string;
+  price: number;
+  caption: string;
+  author: string;
+}
+
 export const SET_USER_INFO = 'SET_USER_INFO';
 export const LOGOUT_USER = 'LOGOUT_USER';
 export const SET_SEARCH_RESULT = 'SET_SEARCH_RESULT';
@@ -48,7 +57,7 @@ export const logoutUser = () => {
   )
 }
 
-export const setSearchResult = (result) => {
+export const setSearchResult = (result: searchResultType[]) => {
   return (
     {
       type: SET_SEARCH_RESULT,
@@ -186,7 +195,6 @@ export const createNote = (purpose, point, explain, impression, bookId, loginUse
 }
 
 export const editNote = (noteId, purpose, point, explain, impression) => (dispatch) => {
-  console.log(noteId, purpose, point, explain, impression);
   const newNote = {
     noteId,
     purpose,
@@ -196,7 +204,6 @@ export const editNote = (noteId, purpose, point, explain, impression) => (dispat
   };
   axios.put(`http://localhost:3002/notes/${noteId}`, newNote)
     .then(res => {
-      console.log(res.data)
       dispatch(updateNote(newNote));
     })
 }
@@ -216,7 +223,18 @@ export const fetchBooksInfo = (searchWord) => (dispatch) => {
       title: searchWord, //後で変数にし、検索フォームのキーワードで検索できるようにする
     },
   }).then(res => {
-    dispatch(setSearchResult(res.data.Items))
+    const newArray: searchResultType[] = [];
+    res.data.Items.forEach(element => {
+      newArray.push({
+        title: element.Item.title,
+        author: element.Item.author,
+        image: element.Item.largeImageUrl,
+        price: element.Item.itemPrice,
+        caption: element.Item.itemCaption,
+        itemUrl: element.Item.itemUrl
+      })
+    })
+    dispatch(setSearchResult(newArray))
   });
 }
 
