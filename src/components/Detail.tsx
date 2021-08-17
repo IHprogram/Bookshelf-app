@@ -23,6 +23,14 @@ interface Props {
   loginUserId: string
 }
 
+interface newBookType {
+  title: string,
+  author: string,
+  image: string,
+  caption: string | null,
+  itemUrl: string
+}
+
 
 function Detail({ loginUser, loginUserId }: Props) {
   const location = useLocation();
@@ -37,7 +45,7 @@ function Detail({ loginUser, loginUserId }: Props) {
   const dispatch = useDispatch();
 
   const register = () => {
-    const newBook = {
+    const newBook: newBookType = {
       title,
       author,
       image,
