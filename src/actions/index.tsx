@@ -27,6 +27,32 @@ interface searchResultType {
   author: string;
 }
 
+interface newBookType {
+  title: string,
+  author: string,
+  image: string,
+  caption: string | null,
+  itemUrl: string,
+}
+
+interface newNoteType {
+  _id: string,
+  purpose: string,
+  point: string,
+  explain: string,
+  impression: string,
+  bookId: string,
+  loginUserId: string
+}
+
+interface editNoteType {
+  purpose: string,
+  point: string,
+  explain: string,
+  impression: string,
+  noteId: string,
+}
+
 export const SET_USER_INFO = 'SET_USER_INFO';
 export const LOGOUT_USER = 'LOGOUT_USER';
 export const SET_SEARCH_RESULT = 'SET_SEARCH_RESULT';
@@ -66,7 +92,7 @@ export const setSearchResult = (result: searchResultType[]) => {
   )
 }
 
-export const setMyBooks = (myBooks) => {
+export const setMyBooks = (myBooks: myBooksType[]) => {
   return (
     {
       type: SET_MY_BOOKS,
@@ -75,7 +101,7 @@ export const setMyBooks = (myBooks) => {
   )
 }
 
-export const createBook = (bookInfo, loginUserId, bookId) => {
+export const createBook = (bookInfo: newBookType, loginUserId: string, bookId: string) => {
   return (
     {
       type: CREATE_BOOK,
@@ -86,7 +112,7 @@ export const createBook = (bookInfo, loginUserId, bookId) => {
   )
 }
 
-export const deleteOneBook = (id) => {
+export const deleteOneBook = (id: string) => {
   return (
     {
       type: DELETE_ONE_BOOK,
@@ -95,7 +121,7 @@ export const deleteOneBook = (id) => {
   )
 }
 
-export const setNotes = (newNotes) => {
+export const setNotes = (newNotes: newNoteType[]) => {
   return (
     {
       type: SET_NOTES,
@@ -104,7 +130,7 @@ export const setNotes = (newNotes) => {
   )
 }
 
-export const addNote = (noteId, newNote) => {
+export const addNote = (noteId: string, newNote) => {
   return (
     {
       type: ADD_NOTE,
@@ -114,7 +140,7 @@ export const addNote = (noteId, newNote) => {
   )
 }
 
-export const updateNote = (newNote) => {
+export const updateNote = (newNote: editNoteType) => {
   return (
     {
       type: UPDATE_NOTE,
@@ -123,7 +149,7 @@ export const updateNote = (newNote) => {
   )
 }
 
-export const deleteOneNote = (id) => {
+export const deleteOneNote = (id: string) => {
   return (
     {
       type: DELETE_ONE_NOTE,
@@ -132,7 +158,7 @@ export const deleteOneNote = (id) => {
   )
 }
 
-export const getMyBooks = (loginUserId) => (dispatch) => {
+export const getMyBooks = (loginUserId: string) => (dispatch) => {
   axios.get('http://localhost:3002/books')
     .then(res => {
       const myBooks: myBooksType[] = res.data.filter(element => element.loginUserId === loginUserId);
@@ -140,7 +166,7 @@ export const getMyBooks = (loginUserId) => (dispatch) => {
     })
 }
 
-export const registerBook = (newBook, loginUserId) => (dispatch) => {
+export const registerBook = (newBook: newBookType, loginUserId: string) => (dispatch) => {
   axios.post('http://localhost:3002/books', {
     title: newBook.title,
     author: newBook.author,
@@ -157,26 +183,37 @@ export const registerBook = (newBook, loginUserId) => (dispatch) => {
     })
 }
 
-export const deleteBook = (id) => (dispatch) => {
+export const deleteBook = (id: string) => (dispatch) => {
   axios.delete(`http://localhost:3002/books/${id}`)
     .then(res => {
       dispatch(deleteOneBook(res.data));
     })
 }
 
-export const getNotes = (bookId) => (dispatch) => {
+export const getNotes = (bookId: string) => (dispatch) => {
   axios.get('http://localhost:3002/notes')
     .then(res => {
-      const newNotes = res.data.filter(element => element.bookId === bookId);
-      if (newNotes.length > 0) {
+      const getNotes = res.data.filter(element => element.bookId === bookId);
+      if (getNotes.length > 0) {
+        const newNotes: newNoteType[] = [];
+        getNotes.forEach(element => {
+          const newNote: newNoteType = {
+            _id: element._id,
+            purpose: element.purpose,
+            point: element.point,
+            impression: element.impression,
+            explain: element.explain,
+            bookId: element.bookId,
+            loginUserId: element.loginUserId
+          }
+          newNotes.push(newNote);
+        });
         dispatch(setNotes(newNotes));
-      } else {
-        console.log('newNotesは空です')
       }
     })
 }
 
-export const createNote = (purpose, point, explain, impression, bookId, loginUserId) => (dispatch) => {
+export const createNote = (purpose: string, point: string, explain: string, impression: string, bookId: string, loginUserId: string) => (dispatch) => {
   axios.post('http://localhost:3002/notes', {
     purpose,
     point,
@@ -194,8 +231,8 @@ export const createNote = (purpose, point, explain, impression, bookId, loginUse
     })
 }
 
-export const editNote = (noteId, purpose, point, explain, impression) => (dispatch) => {
-  const newNote = {
+export const editNote = (noteId: string, purpose: string, point: string, explain: string, impression: string) => (dispatch) => {
+  const newNote: editNoteType = {
     noteId,
     purpose,
     point,
@@ -209,14 +246,14 @@ export const editNote = (noteId, purpose, point, explain, impression) => (dispat
 }
 
 
-export const deleteNote = (id) => (dispatch) => {
+export const deleteNote = (id: string) => (dispatch) => {
   axios.delete(`http://localhost:3002/notes/${id}`)
     .then(res => {
       dispatch(deleteOneNote(res.data));
     })
 }
 
-export const fetchBooksInfo = (searchWord) => (dispatch) => {
+export const fetchBooksInfo = (searchWord: string) => (dispatch) => {
   axios.get("https://app.rakuten.co.jp/services/api/BooksBook/Search/20170404?", {
     params: {
       applicationId: rakutenid, //楽天でログインし、自分のアプリケーションIDを取得
@@ -257,7 +294,7 @@ export const userRegister = (user: newUserType) => (dispatch) => {
     })
 }
 
-export const signIn = (email, password) => (dispatch) => {
+export const signIn = (email: string, password: string) => (dispatch) => {
   firebase.auth().signInWithEmailAndPassword(email, password)
     .then(result => {
       const userName: string | null = result.user!.displayName;
