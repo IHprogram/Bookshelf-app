@@ -1,6 +1,7 @@
 import firebase from '../firebase/firebase.js';
 import axios from 'axios';
 import rakutenid from '../rakutenid';
+import { ThunkDispatch } from 'redux-thunk';
 
 interface newUserType {
   name: string;
@@ -61,6 +62,7 @@ interface editNoteType {
   impression: string,
   noteId: string,
 }
+
 
 export const SET_USER_INFO = 'SET_USER_INFO';
 export const LOGOUT_USER = 'LOGOUT_USER';
@@ -167,7 +169,7 @@ export const deleteOneNote = (id: string) => {
   )
 }
 
-export const getMyBooks = (loginUserId: string) => (dispatch) => {
+export const getMyBooks = (loginUserId: string) => (dispatch: any) => {
   axios.get('http://localhost:3002/books')
     .then(res => {
       const myBooks: myBooksType[] = res.data.filter(element => element.loginUserId === loginUserId);
@@ -175,7 +177,7 @@ export const getMyBooks = (loginUserId: string) => (dispatch) => {
     })
 }
 
-export const registerBook = (newBook: newBookType, loginUserId: string) => (dispatch) => {
+export const registerBook = (newBook: newBookType, loginUserId: string) => (dispatch: any) => {
   axios.post('http://localhost:3002/books', {
     title: newBook.title,
     author: newBook.author,
@@ -192,14 +194,14 @@ export const registerBook = (newBook: newBookType, loginUserId: string) => (disp
     })
 }
 
-export const deleteBook = (id: string) => (dispatch) => {
+export const deleteBook = (id: string) => (dispatch: any) => {
   axios.delete(`http://localhost:3002/books/${id}`)
     .then(res => {
       dispatch(deleteOneBook(res.data));
     })
 }
 
-export const getNotes = (bookId: string) => (dispatch) => {
+export const getNotes = (bookId: string) => (dispatch: any) => {
   axios.get('http://localhost:3002/notes')
     .then(res => {
       const getNotes = res.data.filter(element => element.bookId === bookId);
@@ -222,7 +224,7 @@ export const getNotes = (bookId: string) => (dispatch) => {
     })
 }
 
-export const createNote = (purpose: string, point: string, explain: string, impression: string, bookId: string, loginUserId: string) => (dispatch) => {
+export const createNote = (purpose: string, point: string, explain: string, impression: string, bookId: string, loginUserId: string) => (dispatch: any) => {
   axios.post('http://localhost:3002/notes', {
     purpose,
     point,
@@ -247,7 +249,7 @@ export const createNote = (purpose: string, point: string, explain: string, impr
     })
 }
 
-export const editNote = (noteId: string, purpose: string, point: string, explain: string, impression: string) => (dispatch) => {
+export const editNote = (noteId: string, purpose: string, point: string, explain: string, impression: string) => (dispatch: any) => {
   const newNote: editNoteType = {
     noteId,
     purpose,
@@ -262,14 +264,14 @@ export const editNote = (noteId: string, purpose: string, point: string, explain
 }
 
 
-export const deleteNote = (id: string) => (dispatch) => {
+export const deleteNote = (id: string) => (dispatch: any) => {
   axios.delete(`http://localhost:3002/notes/${id}`)
     .then(res => {
       dispatch(deleteOneNote(res.data));
     })
 }
 
-export const fetchBooksInfo = (searchWord: string) => (dispatch) => {
+export const fetchBooksInfo = (searchWord: string) => (dispatch: any) => {
   axios.get("https://app.rakuten.co.jp/services/api/BooksBook/Search/20170404?", {
     params: {
       applicationId: rakutenid, //楽天でログインし、自分のアプリケーションIDを取得
@@ -292,7 +294,7 @@ export const fetchBooksInfo = (searchWord: string) => (dispatch) => {
 }
 
 
-export const userRegister = (user: newUserType) => (dispatch) => {
+export const userRegister = (user: newUserType) => (dispatch: any) => {
 
   firebase.auth().createUserWithEmailAndPassword(user.email, user.password)
     .then(async result => {
@@ -310,7 +312,7 @@ export const userRegister = (user: newUserType) => (dispatch) => {
     })
 }
 
-export const signIn = (email: string, password: string) => (dispatch) => {
+export const signIn = (email: string, password: string) => (dispatch: any) => {
   firebase.auth().signInWithEmailAndPassword(email, password)
     .then(result => {
       const userName: string | null = result.user!.displayName;
@@ -321,7 +323,7 @@ export const signIn = (email: string, password: string) => (dispatch) => {
     })
 }
 
-export const signOut = () => (dispatch) => {
+export const signOut = () => (dispatch: any) => {
   firebase.auth().signOut()
     .then(result => {
       dispatch(logoutUser());
