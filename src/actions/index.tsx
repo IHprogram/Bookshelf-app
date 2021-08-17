@@ -45,6 +45,15 @@ interface newNoteType {
   loginUserId: string
 }
 
+interface addNoteType {
+  purpose: string,
+  point: string,
+  explain: string,
+  impression: string,
+  bookId: string,
+  loginUserId: string,
+}
+
 interface editNoteType {
   purpose: string,
   point: string,
@@ -130,7 +139,7 @@ export const setNotes = (newNotes: newNoteType[]) => {
   )
 }
 
-export const addNote = (noteId: string, newNote) => {
+export const addNote = (noteId: string, newNote: addNoteType) => {
   return (
     {
       type: ADD_NOTE,
@@ -224,7 +233,14 @@ export const createNote = (purpose: string, point: string, explain: string, impr
   })
     .then(res => {
       const noteId: string = res.data._id;
-      const newNote = res.data;
+      const newNote: addNoteType = {
+        purpose: res.data.purpose,
+        point: res.data.point,
+        explain: res.data.explain,
+        impression: res.data.impression,
+        bookId: res.data.bookId,
+        loginUserId: res.data.loginUserId
+      };
       dispatch(addNote(noteId, newNote));
     }).catch(error => {
       console.log(error);
