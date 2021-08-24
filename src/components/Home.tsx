@@ -22,6 +22,26 @@ interface BookInfoType {
 const useStyles = makeStyles((theme) => ({
   list: {
     listStyle: 'none',
+    margin: '0 auto 30px',
+    maxWidth: "50%",
+  },
+  bookWrapper: {
+    display: 'flex',
+    justifyContent: 'center',
+    flexDirection: 'column'
+  },
+  bookImageWrapper: {
+    display: 'flex',
+    justifyContent: 'center',
+  },
+  bookLink: {
+    textDecoration: 'none',
+    color: 'orange'
+  },
+  bookInfo: {
+    display: 'flex',
+    justifyContent: 'center',
+    flexDirection: 'column'
   }
 }));
 
@@ -39,7 +59,7 @@ function Home() {
 
   return (
     <Grid container alignItems="center" justifyContent="center">
-      <h1>書籍一覧</h1>
+      <h1>- 書籍一覧 -</h1>
       <SearchForm />
 
       <ul>
@@ -50,22 +70,24 @@ function Home() {
           return (
             <li key={index} className={classes.list}>
               <Card>
-                <CardContent>
-                  <Typography>
+                <CardContent className={classes.bookWrapper}>
+                  <div className={classes.bookImageWrapper}>
                     <img src={element.image} />
-                  </Typography>
-                  <Typography>
+                  </div>
+                  <Grid container alignItems="center" justify="center">
                     <Link to={{
                       pathname: `/detail/${index + 1}`,
                       state: { searchdata: element }
                     }}
-                    >
+                      className={classes.bookLink} >
                       {element.title}
                     </Link>
-                  </Typography>
-                  <Typography>
-                    {element.author}
-                  </Typography>
+                  </Grid>
+                  <Grid container alignItems="center" justify="center">
+                    <div>
+                      {element.author}
+                    </div>
+                  </Grid>
                 </CardContent>
               </Card>
             </li>

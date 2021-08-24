@@ -28,6 +28,7 @@ function App() {
     [loginUserId, setLoginUserId] = useState<string>('');
 
   useEffect(() => {
+    console.log(process.env)
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         const userId: string | null = user.uid;

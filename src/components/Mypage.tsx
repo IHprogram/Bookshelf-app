@@ -10,6 +10,7 @@ import { getMyBooks, deleteBook, setUserInfo } from '../actions/index';
 import Button from '@material-ui/core/Button';
 import firebase from '../firebase/firebase';
 import { makeStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
 
 interface Props {
   loginUserId: string
@@ -32,6 +33,29 @@ interface UsersBooksType {
 const useStyles = makeStyles((theme) => ({
   list: {
     listStyle: 'none',
+    margin: '0 auto 30px',
+    maxWidth: "50%",
+  },
+  bookWrapper: {
+    display: 'flex',
+    justifyContent: 'center',
+    flexDirection: 'column'
+  },
+  bookImageWrapper: {
+    display: 'flex',
+    justifyContent: 'center',
+  },
+  bookLink: {
+    textDecoration: 'none',
+    color: 'orange'
+  },
+  bookInfo: {
+    display: 'flex',
+    justifyContent: 'center',
+    flexDirection: 'column'
+  },
+  deleteButton: {
+    width: '50%'
   }
 }));
 
@@ -73,7 +97,9 @@ function Mypage({ loginUserId }: Props) {
 
   return (
     <div>
-      <h2>登録した本</h2>
+      <Grid container alignItems="center" justifyContent="center">
+        <h2>- 登録書籍一覧 -</h2>
+      </Grid>
       <ul>
         {registeredBooks.length === 0 &&
           <p>登録した本はありません。</p>
@@ -82,41 +108,50 @@ function Mypage({ loginUserId }: Props) {
           return (
             <li key={index} className={classes.list}>
               <Card>
-                <CardContent>
-                  <Typography>
+                <CardContent className={classes.bookWrapper}>
+                  <div className={classes.bookImageWrapper}>
                     <img src={element.image} />
-                  </Typography>
-                  <Typography>
+                  </div>
+                  <Grid container alignItems="center" justify="center">
                     <Link to={{
                       pathname: `/detail/${index + 1}`,
                       state: { searchdata: element }
                     }}
-                    >
+                      className={classes.bookLink} >
                       {element.title}
                     </Link>
-                  </Typography>
-                  <Typography>
-                    {element.author}
-                  </Typography>
-                  <Typography>
-                    <Link to={{
-                      pathname: `/noteform`,
-                      state: { bookId: element.bookId }
-                    }}
-                    >
-                      ノートを作成する
-                    </Link>
-                  </Typography>
-                  <Typography>
-                    <Link to={{
-                      pathname: `/mynotes`,
-                      state: { bookId: element.bookId, title: element.title }
-                    }}
-                    >
-                      この本のノートを見る
-                    </Link>
-                  </Typography>
-                  <Button variant="outlined" color="secondary" onClick={() => deleteButton(element.bookId)}>削除</Button>
+                  </Grid>
+
+                  <Grid container alignItems="center" justifyContent="center">
+                    <Typography>
+                      {element.author}
+                    </Typography>
+                  </Grid>
+                  <Grid container alignItems="center" justifyContent="center">
+                    <Typography>
+                      <Link to={{
+                        pathname: `/noteform`,
+                        state: { bookId: element.bookId }
+                      }}
+                        className={classes.bookLink} >
+                        ノートを作成する
+                      </Link>
+                    </Typography>
+                  </Grid>
+                  <Grid container alignItems="center" justifyContent="center">
+                    <Typography>
+                      <Link to={{
+                        pathname: `/mynotes`,
+                        state: { bookId: element.bookId, title: element.title }
+                      }}
+                        className={classes.bookLink}>
+                        この本のノートを見る
+                      </Link>
+                    </Typography>
+                  </Grid>
+                  <Grid container alignItems="center" justifyContent="center">
+                    <Button variant="outlined" color="secondary" onClick={() => deleteButton(element.bookId)} className={classes.deleteButton}>削除</Button>
+                  </Grid>
                 </CardContent>
               </Card>
             </li>
