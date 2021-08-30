@@ -28,7 +28,7 @@ interface StateType {
 
 const useStyles = makeStyles((theme) => ({
   card: {
-    width: "80%",
+    maxWidth: "50%",
     margin: "60px auto"
   },
   editLink: {

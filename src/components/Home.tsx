@@ -20,14 +20,23 @@ interface BookInfoType {
 }
 
 const useStyles = makeStyles((theme) => ({
+  booksWrapper: {
+    display: "flex",
+    flexWrap: "wrap",
+    maxWidth: "900px"
+  },
   list: {
     listStyle: 'none',
     margin: '0 auto 30px',
-    maxWidth: "50%",
   },
-  bookWrapper: {
+  card: {
+    width: "250px",
+    height: "350px",
+  },
+  cardContent: {
     display: 'flex',
     justifyContent: 'center',
+    alignItems: "center",
     flexDirection: 'column'
   },
   bookImageWrapper: {
@@ -62,15 +71,15 @@ function Home() {
       <h1>- 書籍一覧 -</h1>
       <SearchForm />
 
-      <ul>
+      <ul className={classes.booksWrapper}>
         {searchData.length === 0 &&
           <p>検索結果はありません。キーワードを変えてもう一度お試しください。</p>
         }
         {searchData.map((element: any, index: any) => {
           return (
             <li key={index} className={classes.list}>
-              <Card>
-                <CardContent className={classes.bookWrapper}>
+              <Card className={classes.card}>
+                <CardContent className={classes.cardContent}>
                   <div className={classes.bookImageWrapper}>
                     <img src={element.image} />
                   </div>
