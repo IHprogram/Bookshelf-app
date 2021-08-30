@@ -112,7 +112,7 @@ function Mypage({ loginUserId }: Props) {
                   <div className={classes.bookImageWrapper}>
                     <img src={element.image} />
                   </div>
-                  <Grid container alignItems="center" justify="center">
+                  <Grid container alignItems="center" justifyContent="center">
                     <Link to={{
                       pathname: `/detail/${index + 1}`,
                       state: { searchdata: element }

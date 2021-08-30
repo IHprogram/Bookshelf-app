@@ -10,6 +10,7 @@ import { getNotes } from '../actions/index';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles((theme) => ({
   list: {
@@ -57,31 +58,35 @@ function MyNotes() {
   }, [notesState]);
 
   return (
-    <div>
-      <h3>「{title}」のノート一覧</h3>
-      {notes.length === 0 &&
-        <p>作成したノートはありません。</p>
-      }
-      {notes.map((element: NoteType, index: number) => {
-        return (
-          <li key={index} className={classes.list}>
-            <Card>
-              <CardContent>
-                <Typography>
-                  <Link to={{
-                    pathname: `/notedetail/:id`,
-                    state: { notesInfo: element }
-                  }}
-                  >
-                    読む目的: {element.purpose}
-                  </Link>
-                </Typography>
-              </CardContent>
-            </Card>
-          </li>
-        )
-      })}
-    </div>
+    <React.Fragment>
+      <Grid container alignItems="center" justifyContent="center">
+        <h3>「{title}」のノート一覧</h3>
+      </Grid>
+      <Grid container alignItems="center" justifyContent="center">
+        {notes.length === 0 &&
+          <p>作成したノートはありません。</p>
+        }
+        {notes.map((element: NoteType, index: number) => {
+          return (
+            <li key={index} className={classes.list}>
+              <Card>
+                <CardContent>
+                  <Typography>
+                    <Link to={{
+                      pathname: `/notedetail/${element.noteId}`,
+                      state: { notesInfo: element }
+                    }}
+                    >
+                      読む目的: {element.purpose}
+                    </Link>
+                  </Typography>
+                </CardContent>
+              </Card>
+            </li>
+          )
+        })}
+      </Grid>
+    </React.Fragment>
   )
 }
 
