@@ -77,7 +77,8 @@ function Detail({ loginUser, loginUserId }: Props) {
       caption,
       itemUrl,
     };
-    dispatch(registerBook(newBook, loginUserId))
+    dispatch(registerBook(newBook, loginUserId));
+    alert('本を登録しました！\nマイページから確認できます。')
   }
 
   const classes = useStyles();
