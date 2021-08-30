@@ -3,7 +3,15 @@ import { useLocation } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import { useDispatch } from 'react-redux';
 import { registerBook } from '../actions/index';
-import { StringLiteralType } from 'typescript';
+import Grid from '@material-ui/core/Grid';
+import { makeStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
 
 interface LocationContent {
   title: string,
@@ -31,6 +39,23 @@ interface newBookType {
   itemUrl: string
 }
 
+const useStyles = makeStyles((theme) => ({
+  bookWrapper: {
+    margin: "60px auto",
+    display: "flex",
+    width: "80%"
+  },
+  bookImage: {
+    width: "300px",
+  },
+  tableWrapper: {
+    width: "300px",
+  },
+  tableBorder: {
+    style: "border-collapse: collapse",
+    border: "1"
+  }
+}));
 
 function Detail({ loginUser, loginUserId }: Props) {
   const location = useLocation();
@@ -55,22 +80,45 @@ function Detail({ loginUser, loginUserId }: Props) {
     dispatch(registerBook(newBook, loginUserId))
   }
 
+  const classes = useStyles();
+
   return (
-    <div>
-      <ul>
-        <li><img src={image} /></li>
-        <li>{title}</li>
-        <li>著者：{author}</li>
-        <li>商品価格：{price}円</li>
-        <li>商品説明：{caption}</li>
-        <li><a href={itemUrl} target='_blank'>この本のURLはこちら</a></li>
+    <Grid container justifyContent="center" className={classes.bookWrapper}>
+      <Grid item xs={4}>
+        <img src={image} className={classes.bookImage} />
+      </Grid>
+      <Grid item xs={8}>
+        <TableContainer component={Paper}>
+          <Table size="small" aria-label="a dense table">
+            <TableBody>
+              <TableRow>
+                <TableCell align="center">タイトル</TableCell>
+                <TableCell align="left">{title}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell align="center">著者</TableCell>
+                <TableCell align="left">{author}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell align="center">商品価格</TableCell>
+                <TableCell align="left">{price}円</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell align="center">商品説明</TableCell>
+                <TableCell align="left">{caption}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell align="center">商品URL</TableCell>
+                <TableCell align="left"><a href={itemUrl} target='_blank'>この本のURLはこちら</a></TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
         {loginUser === true &&
-          <li>
-            <Button color="primary" onClick={register}>登録</Button>
-          </li>
+          <Button color="primary" onClick={register}>登録</Button>
         }
-      </ul>
-    </div>
+      </Grid>
+    </Grid>
   )
 };
 

@@ -74,7 +74,7 @@ function Home() {
                   <div className={classes.bookImageWrapper}>
                     <img src={element.image} />
                   </div>
-                  <Grid container alignItems="center" justify="center">
+                  <Grid container alignItems="center" justifyContent="center">
                     <Link to={{
                       pathname: `/detail/${index + 1}`,
                       state: { searchdata: element }
@@ -83,7 +83,7 @@ function Home() {
                       {element.title}
                     </Link>
                   </Grid>
-                  <Grid container alignItems="center" justify="center">
+                  <Grid container alignItems="center" justifyContent="center">
                     <div>
                       {element.author}
                     </div>
