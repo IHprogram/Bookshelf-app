@@ -63,6 +63,7 @@ interface editNoteType {
   noteId: string,
 }
 
+const PORT: string = process.env.REACT_APP_PORT || "http://localhost:3002";
 
 export const SET_USER_INFO = 'SET_USER_INFO';
 export const LOGOUT_USER = 'LOGOUT_USER';
@@ -170,7 +171,8 @@ export const deleteOneNote = (id: string) => {
 }
 
 export const getMyBooks = (loginUserId: string) => (dispatch: any) => {
-  axios.get('http://localhost:3002/books')
+  console.log(PORT);
+  axios.get(`${PORT}/books`)
     .then(res => {
       const myBooks: myBooksType[] = res.data.filter(element => element.loginUserId === loginUserId);
       dispatch(setMyBooks(myBooks));
