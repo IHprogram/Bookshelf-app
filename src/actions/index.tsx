@@ -172,7 +172,7 @@ export const deleteOneNote = (id: string) => {
 
 export const getMyBooks = (loginUserId: string) => (dispatch: any) => {
   console.log(PORT);
-  axios.get(`${PORT}/books`)
+  axios.get(`${PORT}/books/`)
     .then(res => {
       const myBooks: myBooksType[] = res.data.filter(element => element.loginUserId === loginUserId);
       dispatch(setMyBooks(myBooks));
