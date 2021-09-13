@@ -172,7 +172,7 @@ export const deleteOneNote = (id: string) => {
 
 export const getMyBooks = (loginUserId: string) => (dispatch: any) => {
   console.log(PORT);
-  axios.get(`${PORT}/books/`)
+  axios.get(`${PORT}/books`)
     .then(res => {
       const myBooks: myBooksType[] = res.data.filter(element => element.loginUserId === loginUserId);
       dispatch(setMyBooks(myBooks));
@@ -180,7 +180,7 @@ export const getMyBooks = (loginUserId: string) => (dispatch: any) => {
 }
 
 export const registerBook = (newBook: newBookType, loginUserId: string) => (dispatch: any) => {
-  axios.post('http://localhost:3002/books/', {
+  axios.post('http://localhost:3002/books', {
     title: newBook.title,
     author: newBook.author,
     image: newBook.image,
