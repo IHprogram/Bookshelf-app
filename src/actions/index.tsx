@@ -180,7 +180,7 @@ export const getMyBooks = (loginUserId: string) => (dispatch: any) => {
 }
 
 export const registerBook = (newBook: newBookType, loginUserId: string) => (dispatch: any) => {
-  axios.post('http://localhost:3002/books', {
+  axios.post('http://localhost:3002/books/', {
     title: newBook.title,
     author: newBook.author,
     image: newBook.image,
