@@ -172,7 +172,7 @@ export const deleteOneNote = (id: string) => {
 
 export const getMyBooks = (loginUserId: string) => (dispatch: any) => {
   console.log(PORT);
-  axios.get(`${PORT}/books`)
+  axios.get(`${PORT}/books`, { withCredentials: true })
     .then(res => {
       const myBooks: myBooksType[] = res.data.filter(element => element.loginUserId === loginUserId);
       dispatch(setMyBooks(myBooks));
@@ -180,20 +180,22 @@ export const getMyBooks = (loginUserId: string) => (dispatch: any) => {
 }
 
 export const registerBook = (newBook: newBookType, loginUserId: string) => (dispatch: any) => {
-  axios.post('http://localhost:3002/books', {
-    title: newBook.title,
-    author: newBook.author,
-    image: newBook.image,
-    caption: newBook.caption,
-    itemUrl: newBook.itemUrl,
-    loginUserId
+  axios.post('http://localhost:3002/books',
+    {
+      title: newBook.title,
+      author: newBook.author,
+      image: newBook.image,
+      caption: newBook.caption,
+      itemUrl: newBook.itemUrl,
+      loginUserId
+    },
+    { withCredentials: true }
+  ).then(res => {
+    const bookId: string = res.data._id;
+    dispatch(createBook(newBook, loginUserId, bookId));
+  }).catch(error => {
+    console.log(error);
   })
-    .then(res => {
-      const bookId: string = res.data._id;
-      dispatch(createBook(newBook, loginUserId, bookId));
-    }).catch(error => {
-      console.log(error);
-    })
 }
 
 export const deleteBook = (id: string) => (dispatch: any) => {

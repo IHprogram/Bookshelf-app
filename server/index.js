@@ -10,7 +10,7 @@ const port = process.env.REACT_APP_PORT || 3002;
 
 app.use(express.json({ limit: '50mb', extended: true }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
-app.use(cors());
+app.use(cors({ origin: true, credentials: true }));
 
 app.use('/books', bookRoutes);
 app.use('/notes', noteRoutes);
