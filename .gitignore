@@ -26,5 +26,6 @@ ts-config.json
 yarn.lock
 server/node_modules
 
+.env
 .env.development
 .env.production
