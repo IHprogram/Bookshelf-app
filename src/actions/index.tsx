@@ -1,7 +1,6 @@
 import firebase from '../firebase/firebase.js';
 import axios from 'axios';
 import rakutenid from '../rakutenid';
-import { ThunkDispatch } from 'redux-thunk';
 
 interface newUserType {
   name: string;
@@ -63,7 +62,7 @@ interface editNoteType {
   noteId: string,
 }
 
-const PORT: string = process.env.REACT_APP_PORT || "http://localhost:3002";
+const PORT = process.env.REACT_APP_PORT || "http://localhost:3002";
 
 export const SET_USER_INFO = 'SET_USER_INFO';
 export const LOGOUT_USER = 'LOGOUT_USER';
