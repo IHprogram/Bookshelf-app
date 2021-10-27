@@ -62,7 +62,7 @@ interface editNoteType {
   noteId: string,
 }
 
-const PORT = process.env.REACT_APP_PORT || "http://localhost:3002";
+const PORT = "https://bookshelf-app-express-api.herokuapp.com/";
 
 export const SET_USER_INFO = 'SET_USER_INFO';
 export const LOGOUT_USER = 'LOGOUT_USER';
@@ -171,7 +171,7 @@ export const deleteOneNote = (id: string) => {
 
 export const getMyBooks = (loginUserId: string) => (dispatch: any) => {
   console.log(PORT);
-  axios.get(`${PORT}/books`, { withCredentials: true })
+  axios.get(`${PORT}books`, { withCredentials: true })
     .then(res => {
       const myBooks: myBooksType[] = res.data.filter(element => element.loginUserId === loginUserId);
       dispatch(setMyBooks(myBooks));
@@ -179,7 +179,7 @@ export const getMyBooks = (loginUserId: string) => (dispatch: any) => {
 }
 
 export const registerBook = (newBook: newBookType, loginUserId: string) => (dispatch: any) => {
-  axios.post('http://localhost:3002/books',
+  axios.post(`${PORT}books`,
     {
       title: newBook.title,
       author: newBook.author,
