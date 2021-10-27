@@ -5,7 +5,6 @@ import {
 } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import { getNotes } from '../actions/index';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -35,7 +34,6 @@ interface NoteType {
 
 function MyNotes() {
   const dispatch = useDispatch();
-  const history = useHistory();
 
   const location = useLocation();
   const state = location.state as bookIdType;

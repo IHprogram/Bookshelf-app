@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -62,8 +62,7 @@ const useStyles = makeStyles((theme) => ({
 function Mypage({ loginUserId }: Props) {
   const initialState: BookInfoType[] = [];
 
-  const [registeredBooks, setRegisteredBooks] = useState(initialState),
-    [loginUserIdState, setLoginUserIdState] = useState<string>('');
+  const [registeredBooks, setRegisteredBooks] = useState(initialState);
   const dispatch = useDispatch();
 
   const myBooks: BookInfoType[] = useSelector((state: { Book: UsersBooksType }) => state.Book.bookArray);
