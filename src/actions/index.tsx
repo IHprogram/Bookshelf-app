@@ -62,8 +62,6 @@ interface editNoteType {
   noteId: string,
 }
 
-const PORT = "https://bookshelf-app-express-api.herokuapp.com/";
-
 export const SET_USER_INFO = 'SET_USER_INFO';
 export const LOGOUT_USER = 'LOGOUT_USER';
 export const SET_SEARCH_RESULT = 'SET_SEARCH_RESULT';
@@ -197,14 +195,14 @@ export const registerBook = (newBook: newBookType, loginUserId: string) => (disp
 }
 
 export const deleteBook = (id: string) => (dispatch: any) => {
-  axios.delete(`http://localhost:3002/books/${id}`)
+  axios.delete(`/books/${id}`)
     .then(res => {
       dispatch(deleteOneBook(res.data));
     })
 }
 
 export const getNotes = (bookId: string) => (dispatch: any) => {
-  axios.get('http://localhost:3002/notes')
+  axios.get('/notes')
     .then(res => {
       const getNotes = res.data.filter(element => element.bookId === bookId);
       if (getNotes.length > 0) {
@@ -227,7 +225,7 @@ export const getNotes = (bookId: string) => (dispatch: any) => {
 }
 
 export const createNote = (purpose: string, point: string, explain: string, impression: string, bookId: string, loginUserId: string) => (dispatch: any) => {
-  axios.post('http://localhost:3002/notes', {
+  axios.post('/notes', {
     purpose,
     point,
     explain,
@@ -259,7 +257,7 @@ export const editNote = (noteId: string, purpose: string, point: string, explain
     explain,
     impression
   };
-  axios.put(`http://localhost:3002/notes/${noteId}`, newNote)
+  axios.put(`/notes/${noteId}`, newNote)
     .then(res => {
       dispatch(updateNote(newNote));
     })
@@ -267,7 +265,7 @@ export const editNote = (noteId: string, purpose: string, point: string, explain
 
 
 export const deleteNote = (id: string) => (dispatch: any) => {
-  axios.delete(`http://localhost:3002/notes/${id}`)
+  axios.delete(`/notes/${id}`)
     .then(res => {
       dispatch(deleteOneNote(res.data));
     })
